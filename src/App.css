@@ -1,22 +1,126 @@
 .App {
   text-align: center;
+  margin: auto;
 }
 
-.App-logo {
-  height: 40vmin;
+.main-container {
+  background: white;
+  border-color: white;
+  margin: 10%;
+  margin-top: 5%;
+  align-items: stretch;
+  height: 72vh;
+  padding: 5%;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.home-container {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  justify-content: space-around;
+}
+
+.home {
+  height: 100%;
+}
+
+.private-game-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  flex-grow: 1;
+  margin: 1%;
+  justify-content: space-between;
 }
 
-.App-link {
-  color: #09d3ac;
+.private-button {
+  display: flex;
+  flex-grow: 0.49;
+  background: grey;
+  justify-content: center;
+  align-items: center;
+  /* text-align: center;
+  vertical-align: middle;
+  float: center;
+  padding-top: auto; */
 }
+
+.public-button {
+  display: flex;
+  flex-grow: 1;
+  background: grey;
+  margin: 1%;
+  justify-content: center;
+  align-items: center;
+}
+
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  padding-bottom: 1%;
+  margin-bottom: 2%;
+}
+
+.question-text-box {
+  border: 1px;
+  border-style: solid;
+  margin: 4%;
+  height: 30vh;
+  padding: 2%;
+}
+
+.question-category {
+  display: flex;
+  justify-content: flex-start;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  margin-bottom: 3%;
+  padding-bottom: 1%;
+}
+
+.question-text {
+  display: flex;
+  justify-content: center;
+  margin: 2%;
+  align-items: center;
+  height: 70%
+}
+
+.answer-container {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  height: 40%;
+  padding: 2%;
+}
+
+.answer-button-row {
+  display: flex;
+  justify-content: space-around
+}
+
+.answer-button {
+  display: flex;
+  flex-grow: .25;
+  font-size: 1.2rem;
+  justify-content: center;
+  padding: 1%;
+  margin: 1%;
+  width: 35%
+}
+
+.answer-button:hover {
+  background-color: rgb(174, 234, 255)
+}
+
+#correct-answer {
+  background-color: rgb(115, 206, 115)
+}
+
+#incorrect-answer {
+  background-color: #F08080
+}
+
+/* color for correct answer rgb(115, 206, 115)  */
