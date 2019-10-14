@@ -5,6 +5,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
+import { startTimer, resetTimer } from './api'
 
 
 
@@ -33,7 +34,14 @@ let defaultState = {
         case 'SCORE':
             return {...state, user: ({...state.user, score: state.user.score + 100})}
         case 'TIMER':
-            return {...state, timer: action.payload}
+            if(action.payload === 0){
+                resetTimer(state.room)
+                startTimer(state.room)
+                return {...state, questionIndex: state.questionIndex +1 }
+            } else {
+                return {...state, timer: action.payload}
+            }
+            
         default:
             return state
     }

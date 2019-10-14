@@ -6,15 +6,11 @@ function connectNew(room) {
 }
 
 function subscribeToTimer(cb, room, time) {
-    console.log('hi')
     // socket.on('timer', time => cb(null, time))
     
     socket.emit('subscribeToTimer', room, time);
 
-    // socket.on('timer', timestamp => {
-    //     console.log('geting from server', timestamp)
-    //     cb(null, timestamp)})
-} 
+}
 
 function receiveTimer(cb) {
     socket.on('timer', timestamp => {

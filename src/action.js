@@ -4,7 +4,6 @@ function changeQuestions(newQuestions) {
 }
 
 function actTimer(time) {
-    console.log('in action', time)
     return {
         payload: time,
         type: 'TIMER'

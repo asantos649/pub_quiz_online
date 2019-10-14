@@ -13,7 +13,6 @@ io.on('connection', (client) => {
             io.sockets.adapter.rooms[roomVar].room = roomVar
         }
         
-        // console.log(io.sockets.adapter.rooms[roomVar].counter)
     })
 
     client.on('disconnect', (roomVar) => {
@@ -27,7 +26,6 @@ io.on('connection', (client) => {
             io.sockets.adapter.rooms[roomVar].counting = false
             setInterval(() => {
             if (io.sockets.adapter.rooms[roomVar]){
-            console.log('in sub', io.sockets.adapter.rooms[roomVar].counter)
             client.emit('timer', io.sockets.adapter.rooms[roomVar].counter)}
         }, 1000)
             }
@@ -43,10 +41,8 @@ io.on('connection', (client) => {
     client.on('startTimer', (roomVar) => {
         if(io.sockets.adapter.rooms[roomVar]){
             console.log('in start time', io.sockets.adapter.rooms[roomVar].counter)
-            // io.sockets.adapter.rooms[roomVar].counting = true
             io.sockets.adapter.rooms[roomVar].timer = setInterval(() => {
                 if (io.sockets.adapter.rooms[roomVar] && io.sockets.adapter.rooms[roomVar].counter !== 0){
-                    // console.log('in start timer', io.sockets.adapter.rooms[roomVar].counter)
                     io.sockets.adapter.rooms[roomVar].counter --;
                 }    
             }, 1000);

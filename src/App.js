@@ -18,13 +18,13 @@ class App extends React.Component {
   }
 
   componentDidMount(){
-    subscribeToTimer(((err, time) =>  {
-      this.props.timerHandler(time)
-    }), this.props.room, 30);
+  //   subscribeToTimer(((err, time) =>  {
+  //     this.props.timerHandler(time)
+  //   }), this.props.room, 30);
 
-    receiveTimer((err, time) =>  {
-      this.props.timerHandler(time)
-    })
+    // receiveTimer((err, time) =>  {
+    //   this.props.timerHandler(time)
+    // })
 
     window.addEventListener('beforeunload', this.componentCleanup);
   }
@@ -58,7 +58,6 @@ function msp(state) {
 function mdp(dispatch) {
   return { getQuestion: (newQuestion) => dispatch(changeQuestions(newQuestion)) ,
     timerHandler: (time) => {
-      console.log(time)
       dispatch(actTimer(time)
     )}}
 }

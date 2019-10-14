@@ -6,16 +6,7 @@ import {cleanString} from '../specialCharacterMap'
 
 class QuestionAnswers extends React.Component {
 
-    componentDidUpdate(prevProps, prevState) {
-        Object.entries(this.props).forEach(([key, val]) =>
-          prevProps[key] !== val && console.log(`Prop '${key}' changed`)
-        );
-        if (this.state) {
-          Object.entries(this.state).forEach(([key, val]) =>
-            prevState[key] !== val && console.log(`State '${key}' changed`)
-          );
-        }
-      }
+
 
       shouldComponentUpdate(prevProps){
 
@@ -45,7 +36,6 @@ class QuestionAnswers extends React.Component {
             this.props.increaseScore()
           }
           this.props.nextQuestion()
-          console.log('starting the timer again')
           startTimer(this.props.room)
         }, 4000, e);
           
