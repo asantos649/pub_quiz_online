@@ -10,7 +10,7 @@ class QuestionHeader extends React.Component {
       componentDidMount(){
           
         receiveTimer((err, time) =>  {
-            this.props.timerHandler(time)
+            this.props.timerHandler(time, this.props.user)
           })
         resetTimer(this.props.room)
         startTimer(this.props.room)
@@ -63,8 +63,8 @@ render () {
   }
   function mdp(dispatch) {
     return { 
-      timerHandler: (time) => {
-        dispatch(actTimer(time)
+      timerHandler: (time, user) => {
+        dispatch(actTimer(time, user)
       )}
     }
   }

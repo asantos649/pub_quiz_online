@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import { startTimer, resetTimer } from '../api'
+import { startTimer, resetTimer, updateScore } from '../api'
 import { actTimer } from '../action'
 import {cleanString} from '../specialCharacterMap'
 
@@ -25,16 +25,17 @@ class QuestionAnswers extends React.Component {
             button.id = 'incorrect-answer'
           }
         })
-    
-        resetTimer(this.props.room)
-        e.persist()
-        setTimeout((event) => {
-          buttons.forEach(button => {
-            button.removeAttribute('id')
-          })
-          if (event.target.innerText.slice(3) === this.props.question.correct_answer){
+       
+          if (e.target.innerText.slice(3) === this.props.question.correct_answer){
             this.props.increaseScore()
           }
+        resetTimer(this.props.room)
+        updateScore(this.props.room, this.props.user.id)
+        e.persist()
+        setTimeout((event) => {
+            buttons.forEach(button => {
+                button.removeAttribute('id')
+              })
           this.props.nextQuestion()
           startTimer(this.props.room)
         }, 4000, e);
@@ -102,9 +103,9 @@ function shuffleArray(array) {
     //   getQuestion: (newQuestion) => dispatch(changeQuestions(newQuestion)) ,
       nextQuestion: () => dispatch({type: 'NEXT'}),
       increaseScore: () => dispatch({type: 'SCORE'}),
-      timerHandler: (time) => {
-        dispatch(actTimer(time)
-      )}
+    //   timerHandler: (time) => {
+    //     dispatch(actTimer(time)
+    //   )}
     }
   }
     

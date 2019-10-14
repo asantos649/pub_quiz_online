@@ -18,13 +18,7 @@ class App extends React.Component {
   }
 
   componentDidMount(){
-  //   subscribeToTimer(((err, time) =>  {
-  //     this.props.timerHandler(time)
-  //   }), this.props.room, 30);
 
-    // receiveTimer((err, time) =>  {
-    //   this.props.timerHandler(time)
-    // })
 
     window.addEventListener('beforeunload', this.componentCleanup);
   }
@@ -57,9 +51,10 @@ function msp(state) {
 
 function mdp(dispatch) {
   return { getQuestion: (newQuestion) => dispatch(changeQuestions(newQuestion)) ,
-    timerHandler: (time) => {
-      dispatch(actTimer(time)
-    )}}
+    // timerHandler: (time, user) => {
+    //   dispatch(actTimer(time, user)
+    // )}}
+  }
 }
 
 export default connect(msp, mdp)(App);

@@ -28,9 +28,6 @@ function startTimer(room) {
 
 function fetchQuestion(room) {
     socket.emit('fetchQuestion', room)
-    // setTimeout(()=> {
-    //     socket.on('question', question => cb(null ,question))
-    // })
 }
 
 function displayQuestion(cb) {
@@ -40,4 +37,14 @@ function displayQuestion(cb) {
 function leaveRoom(room) {
     socket.emit('disconnect', room)
 }
-export { subscribeToTimer, receiveTimer, resetTimer, startTimer, connectNew, fetchQuestion, displayQuestion, leaveRoom}
+
+function updateScore(room, user) {
+    socket.emit('updateScore', room, user)
+}
+
+function showScore(users) {
+    socket.on('showScore', users)
+}
+
+
+export { subscribeToTimer, showScore, updateScore, receiveTimer, resetTimer, startTimer, connectNew, fetchQuestion, displayQuestion, leaveRoom}

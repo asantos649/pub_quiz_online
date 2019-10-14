@@ -3,11 +3,16 @@ function changeQuestions(newQuestions) {
             type: 'QUESTION'}
 }
 
-function actTimer(time) {
+function actTimer(time, question) {
     return {
-        payload: time,
+        
+        payload: {
+            time: time,
+            question, question
+        },
         type: 'TIMER'
     }
 }
+
 
 export {changeQuestions, actTimer}

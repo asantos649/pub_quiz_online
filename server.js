@@ -11,6 +11,7 @@ io.on('connection', (client) => {
         if (!io.sockets.adapter.rooms[roomVar]){
             client.join(roomVar)
             io.sockets.adapter.rooms[roomVar].room = roomVar
+            io.sockets.adapter.rooms[roomVar].users = []
         }
         
     })
@@ -61,6 +62,14 @@ io.on('connection', (client) => {
             // }
             
         })
+    })
+
+    client.on('updateScore', (roomVar, user) => {
+        io.sockets.adapter.rooms[roomVar].users = [...io.sockets.adapter.rooms[roomVar].users, user]
+    })
+
+    client.on('showScore', (roomVar) => {
+        io.to(roomVar).emit('showScore', io.sockets.adapter.rooms[roomVar].users )
     })
 })
 

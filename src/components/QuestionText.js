@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import { displayQuestion} from '../api'
+import { displayQuestion, startTimer, resetTimer} from '../api'
 import { changeQuestions} from '../action'
 import {cleanString} from '../specialCharacterMap'
 
@@ -14,6 +14,25 @@ class QuestionText extends React.Component {
       }
 
     render () {
+        console.log('text render', this.props)
+        if(this.props.time === 0) {
+            resetTimer(this.props.room)
+            const buttons = document.querySelectorAll('.answer-button')
+                buttons.forEach(button => {
+                    if (button.innerText.slice(3) === this.props.question.correct_answer){
+                      button.id = 'correct-answer'
+                    } else{
+                      button.id = 'incorrect-answer'
+                    }
+                  })
+            setTimeout(() => {
+                this.props.nextQuestion()
+                buttons.forEach(button => {
+                    button.removeAttribute('id')
+                  })
+                startTimer(this.props.room)
+            }, 4000)
+        }
         if(this.props.question){
         return(
             <div className='question-text-box'>
@@ -37,7 +56,8 @@ class QuestionText extends React.Component {
       return {
         question: {...question, index: state.questionIndex},
         user: state.user,
-        room: state.room
+        room: state.room,
+        time: state.timer
       }
     }
     else {

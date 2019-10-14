@@ -18,7 +18,8 @@ let defaultState = {
     },
     questions: [],
     questionIndex: 0,
-    timer: 30
+    timer: 30,
+    showScore: false
   }
 
   const createdStore = createStore(reducer, defaultState)
@@ -30,17 +31,32 @@ let defaultState = {
             newQuestionsArray = action.payload
             return {...state, questions: newQuestionsArray}
         case "NEXT":
-            return {...state, questionIndex: state.questionIndex +1 }
+            if (state.questions[state.questionIndex+1]){
+                return {...state, questionIndex: state.questionIndex +1 }
+            }else {
+                return {...state, showScore: true}
+            }
         case 'SCORE':
             return {...state, user: ({...state.user, score: state.user.score + 100})}
         case 'TIMER':
-            if(action.payload === 0){
-                resetTimer(state.room)
-                startTimer(state.room)
-                return {...state, questionIndex: state.questionIndex +1 }
-            } else {
-                return {...state, timer: action.payload}
-            }
+            // if(action.payload.time === 0){
+            //     // resetTimer(state.room)
+            //     const buttons = document.querySelectorAll('.answer-button')
+            //     buttons.forEach(button => {
+            //         if (button.innerText.slice(3) === action.payload.question.correct_answer){
+            //           button.id = 'correct-answer'
+            //         } else{
+            //           button.id = 'incorrect-answer'
+            //         }
+            //       })
+            //     //   setTimeout(() => {
+            //     //     // dispatch({type: 'NEXT'})
+            //     //     startTimer(state.room)
+            //     //   }, 4000)payload
+            //       return {...state, timer: action.}
+            // } else {
+                return {...state, timer: action.payload.time}
+            // }
             
         default:
             return state

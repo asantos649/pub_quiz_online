@@ -1,14 +1,23 @@
 import React from 'react';
 // import Home from '../components/Home'
 import Question from '../components/Question'
+import { connect } from 'react-redux'
+import ScoreContainer from './ScoreContainer';
 
-function MainContainer() {
+function MainContainer(props) {
     return (
       <div className="main-container">
         {/* <Home /> */}
-        <Question />
+        {props.showScore ? <ScoreContainer /> : <Question />}
       </div>
     );
   }
+
+  function msp(state){
+    return {
+      showScore: state.showScore
+    }
+    
+  }
   
-  export default MainContainer;
+  export default connect(msp)(MainContainer);
