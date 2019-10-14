@@ -15,31 +15,37 @@ io.on('connection', (client) => {
         
         // console.log(io.sockets.adapter.rooms[roomVar].counter)
     })
-    
+
+    client.on('disconnect', (roomVar) => {
+        client.leave(roomVar)
+    })
     
     client.on('subscribeToTimer', (roomVar, time) => {
         console.log('client is subscribing to room ', time); 
         if (io.sockets.adapter.rooms[roomVar]){
             io.sockets.adapter.rooms[roomVar].counter = time
             io.sockets.adapter.rooms[roomVar].counting = false
-        setInterval(() => {
+            setInterval(() => {
+            if (io.sockets.adapter.rooms[roomVar]){
             console.log('in sub', io.sockets.adapter.rooms[roomVar].counter)
-            client.broadcast.to(roomVar).emit('timer', io.sockets.adapter.rooms[roomVar].counter);  
-        }, 1000);
-        }
-        
+            client.emit('timer', io.sockets.adapter.rooms[roomVar].counter)}
+        }, 1000)
+            }
+            
     })
 
     client.on('resetTimer', (roomVar) => {
+        console.log('resettingTimer')
         io.sockets.adapter.rooms[roomVar].counter = 30
+        clearInterval(io.sockets.adapter.rooms[roomVar].timer)
     })
 
     client.on('startTimer', (roomVar) => {
-        if(io.sockets.adapter.rooms[roomVar] && !io.sockets.adapter.rooms[roomVar].counting){
+        if(io.sockets.adapter.rooms[roomVar]){
             console.log('in start time', io.sockets.adapter.rooms[roomVar].counter)
-            io.sockets.adapter.rooms[roomVar].counting = true
-            setInterval(() => {
-                if (io.sockets.adapter.rooms[roomVar].counter !== 0){
+            // io.sockets.adapter.rooms[roomVar].counting = true
+            io.sockets.adapter.rooms[roomVar].timer = setInterval(() => {
+                if (io.sockets.adapter.rooms[roomVar] && io.sockets.adapter.rooms[roomVar].counter !== 0){
                     // console.log('in start timer', io.sockets.adapter.rooms[roomVar].counter)
                     io.sockets.adapter.rooms[roomVar].counter --;
                 }    

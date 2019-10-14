@@ -91,4 +91,17 @@ const specialChar = {
      '&#182;': '¶'
 }
 
-export {specialChar}
+function cleanString(string) {
+    let newString
+    if (string.match(/&.*?;/g)){
+      string.match(/&.*?;/g).forEach((str)=>{
+        const regex = new RegExp(str, 'g')
+        newString = string.replace(regex, specialChar[str])
+        
+      })} else {
+        newString = string
+      }    
+    return newString
+  }
+
+export {specialChar, cleanString}

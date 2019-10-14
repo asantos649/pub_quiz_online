@@ -1,21 +1,23 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import { displayQuestion, subscribeToTimer, startTimer } from '../api'
-import { changeQuestions, actTimer } from '../action'
-import {specialChar} from '../specialCharacterMap'
+import { subscribeToTimer, startTimer, receiveTimer, resetTimer } from '../api'
+import { actTimer } from '../action'
+
 
 class QuestionHeader extends React.Component {
 
-    constructor(props){
-        super(props)  
-        subscribeToTimer(((err, time) =>  {
-          console.log('in sub', time)
-          this.props.timerHandler(time)
-        }), this.props.room, 30);
-      }
 
       componentDidMount(){
+          
+        receiveTimer((err, time) =>  {
+            this.props.timerHandler(time)
+          })
+        resetTimer(this.props.room)
         startTimer(this.props.room)
+                
+        subscribeToTimer(((err, time) =>  {
+          this.props.timerHandler(time)
+        }), this.props.room, 30);
       }
 
 render () {
@@ -36,15 +38,7 @@ render () {
 }
 
 
-function shuffleArray(array) {
-    for (var i = array.length - 1; i > 0; i--) {
-        var j = Math.floor(Math.random() * (i + 1));
-        var temp = array[i];
-        array[i] = array[j];
-        array[j] = temp;
-    }
-    return array
-  }
+
   
   function msp(state) {
     let question={}
@@ -56,7 +50,7 @@ function shuffleArray(array) {
     
       return {
           ...state,
-        question: {...question, index: state.questionIndex, displayAnswers: shuffleArray(answers)},
+        question: {...question, index: state.questionIndex},
         user: state.user,
         timer: state.timer
       }
@@ -69,11 +63,7 @@ function shuffleArray(array) {
   }
   function mdp(dispatch) {
     return { 
-    //   getQuestion: (newQuestion) => dispatch(changeQuestions(newQuestion)) ,
-    //   nextQuestion: () => dispatch({type: 'NEXT'}),
-      increaseScore: () => dispatch({type: 'SCORE'}),
       timerHandler: (time) => {
-        console.log(time)
         dispatch(actTimer(time)
       )}
     }
