@@ -35,8 +35,11 @@ io.on('connection', (client) => {
 
     client.on('resetTimer', (roomVar) => {
         console.log('resettingTimer')
-        io.sockets.adapter.rooms[roomVar].counter = 30
-        clearInterval(io.sockets.adapter.rooms[roomVar].timer)
+        if(io.sockets.adapter.rooms[roomVar]){
+            io.sockets.adapter.rooms[roomVar].counter = 30
+            clearInterval(io.sockets.adapter.rooms[roomVar].timer)
+        }
+        
     })
 
     client.on('startTimer', (roomVar) => {
@@ -52,7 +55,7 @@ io.on('connection', (client) => {
     })
 
     client.on('fetchQuestion', (roomVar) => {
-        fetch('https://opentdb.com/api.php?amount=10&difficulty=easy&type=multiple')
+        fetch('https://opentdb.com/api.php?amount=3&difficulty=easy&type=multiple')
         .then(resp => resp.json())
         .then(data => {
             // data.replace(/(&quot\;)/g,"\"")
@@ -65,10 +68,25 @@ io.on('connection', (client) => {
     })
 
     client.on('updateScore', (roomVar, user) => {
-        io.sockets.adapter.rooms[roomVar].users = [...io.sockets.adapter.rooms[roomVar].users, user]
+        console.log(io.sockets.adapter.rooms[roomVar].users)
+        if (!io.sockets.adapter.rooms[roomVar].users.some(userObj => userObj.id === user.id)){
+            io.sockets.adapter.rooms[roomVar].users = [...io.sockets.adapter.rooms[roomVar].users, user]
+        } else {
+            let newArray = io.sockets.adapter.rooms[roomVar].users.map(userObj => {
+                if (userObj.id === user.id){
+                    console.log(user)
+                    return user
+                } else {
+                    return userObj
+                }
+            })
+            console.log('newArray', newArray)
+            io.sockets.adapter.rooms[roomVar].users = newArray
+        }
+        
     })
 
-    client.on('showScore', (roomVar) => {
+    client.on('fetchScore', (roomVar) => {
         io.to(roomVar).emit('showScore', io.sockets.adapter.rooms[roomVar].users )
     })
 })

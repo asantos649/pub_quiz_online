@@ -30,9 +30,10 @@ class QuestionAnswers extends React.Component {
             this.props.increaseScore()
           }
         resetTimer(this.props.room)
-        updateScore(this.props.room, this.props.user.id)
+        // updateScore(this.props.room, this.props.user)
         e.persist()
         setTimeout((event) => {
+            updateScore(this.props.room, this.props.user)
             buttons.forEach(button => {
                 button.removeAttribute('id')
               })

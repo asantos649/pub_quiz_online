@@ -42,9 +42,12 @@ function updateScore(room, user) {
     socket.emit('updateScore', room, user)
 }
 
-function showScore(users) {
-    socket.on('showScore', users)
+function fetchScore(roomVar,cb) {
+    
+    socket.on('showScore', users => cb(users))
+    socket.emit('fetchScore', roomVar)
+
 }
 
 
-export { subscribeToTimer, showScore, updateScore, receiveTimer, resetTimer, startTimer, connectNew, fetchQuestion, displayQuestion, leaveRoom}
+export { subscribeToTimer, fetchScore, updateScore, receiveTimer, resetTimer, startTimer, connectNew, fetchQuestion, displayQuestion, leaveRoom}

@@ -24,7 +24,7 @@ render () {
     if(this.props.question){
     return(
         <div className='question-header'>
-            <div className='question-tracker'> {this.props.question.index + 1} of 10</div>
+            <div className='question-tracker'> {this.props.question.index + 1} of {this.props.questions.length}</div>
             <div className='question-timer'>Time: {this.props.timer}</div>
             <div className='user-score'>Score: {this.props.user.score}</div>
         </div>
