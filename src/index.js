@@ -12,9 +12,10 @@ import { startTimer, resetTimer } from './api'
 let defaultState = {
     room: 'some-room',
     user: {
-      id: 'user-id',
-      name: 'Andrew',
-      score: 0
+      id: 'no-id',
+      name: 'NA',
+      score: 0,
+      emoji: '💩'
     },
     questions: [],
     questionIndex: 0,
@@ -38,6 +39,9 @@ let defaultState = {
             }
         case 'SCORE':
             return {...state, user: ({...state.user, score: state.user.score + 100})}
+        case 'JOIN':
+            let newId = new Date().valueOf()
+            return {...state, room: action.payload.room, user: {...state.user, name: action.payload.user, id: newId}}
         case 'TIMER':
             // if(action.payload.time === 0){
             //     // resetTimer(state.room)
@@ -64,7 +68,7 @@ let defaultState = {
 }
 
 ReactDOM.render(
-    <Provider store = {createdStore}>
+    <Provider store={createdStore}>
         <App />
     </Provider>, document.getElementById('root'));
 

@@ -14,5 +14,15 @@ function actTimer(time, question) {
     }
 }
 
+function joinGame(room, user) {
+    return {
+        payload: {
+            room: room,
+            user, user
+        },
+        type: 'JOIN'
+    }
+}
 
-export {changeQuestions, actTimer}
+
+export {changeQuestions, joinGame, actTimer}

@@ -3,14 +3,16 @@ import React from 'react';
 import Question from '../components/Question'
 import { connect } from 'react-redux'
 import ScoreContainer from './ScoreContainer';
+import UserCreater from '../components/UserCreater'
 
 function MainContainer(props) {
     return (
       <div className="main-container">
         {/* <Home /> */}
-        {props.showScore ? <ScoreContainer /> : <Question />}
+        {/* {props.showScore ? <ScoreContainer /> : <Question />} */}
+        <UserCreater />
       </div>
-    );
+    )
   }
 
   function msp(state){

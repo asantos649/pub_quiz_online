@@ -12,7 +12,10 @@ io.on('connection', (client) => {
             client.join(roomVar)
             io.sockets.adapter.rooms[roomVar].room = roomVar
             io.sockets.adapter.rooms[roomVar].users = []
+        } else {
+            client.join(roomVar)
         }
+        
         
     })
 
@@ -34,7 +37,7 @@ io.on('connection', (client) => {
     })
 
     client.on('resetTimer', (roomVar) => {
-        console.log('resettingTimer')
+        console.log('resettingTimer for room', roomVar)
         if(io.sockets.adapter.rooms[roomVar]){
             io.sockets.adapter.rooms[roomVar].counter = 30
             clearInterval(io.sockets.adapter.rooms[roomVar].timer)

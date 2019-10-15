@@ -8,14 +8,14 @@ import { changeQuestions, actTimer } from './action'
 
 class App extends React.Component {
 
-  constructor(props) {
-    super(props);
-    connectNew(`${props.room}`)
-    fetchQuestion(`${props.room}`)
-    displayQuestion((err, newQuestion) => {
-      props.getQuestion(newQuestion)
-    })
-  }
+  // constructor(props) {
+  //   super(props);
+  //   connectNew(`${props.room}`)
+  //   fetchQuestion(`${props.room}`)
+  //   displayQuestion((err, newQuestion) => {
+  //     props.getQuestion(newQuestion)
+  //   })
+  // }
 
   componentDidMount(){
 

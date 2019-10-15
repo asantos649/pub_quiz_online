@@ -134,4 +134,58 @@
   background: rgb(199, 199, 199)
 }
 
+.new-game-container{
+  padding: 10%;
+  padding-top: 8%;
+  height: 85%;
+}
+
+.new-game-form{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  font-size: 2rem;
+  align-items: flex-start;
+  /* padding-bottom: 10%; */
+}
+
+.new-game-label{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.new-game-input{
+  flex-grow: 1;
+  font-size: 1.2rem;
+  width: auto;
+  margin-left: 10px;
+}
+
+.emoji-button-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 35%;
+  /* padding-bottom: 10%; */
+}
+.emoji-row{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 57vw;
+}
+
+.emoji-button{
+  flex-grow: .2;
+  font-size: 2rem;
+  padding-top: 1%;
+}
+
+#selected-emoji{
+  background-color: rgb(174, 234, 255)
+}
+
 /* color for correct answer rgb(115, 206, 115)  */

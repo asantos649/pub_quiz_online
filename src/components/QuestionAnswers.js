@@ -9,9 +9,14 @@ class QuestionAnswers extends React.Component {
 
 
       shouldComponentUpdate(prevProps){
-
-       return  (this.props.question.displayAnswers[0] === '') ? true : !(prevProps.question.index === this.props.question.index)
+          if(prevProps.question.question !== this.props.question.question){
+              return true
+          } else {
+            return  (this.props.question.displayAnswers[0] === '') ? true : !(prevProps.question.index === this.props.question.index)
                   
+          }
+
+       
        
       }
 
@@ -26,7 +31,7 @@ class QuestionAnswers extends React.Component {
           }
         })
        
-          if (e.target.innerText.slice(3) === this.props.question.correct_answer){
+          if (e.target.innerText.slice(3) === cleanString(this.props.question.correct_answer)){
             this.props.increaseScore()
           }
         resetTimer(this.props.room)
