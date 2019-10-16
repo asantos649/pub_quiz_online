@@ -20,7 +20,9 @@ class ScoreContainer extends React.Component {
     }
 
     render() {
-        let usersComponents = this.state.users.map(user => <ScoreCard key={`${Date.now}`} user={user}/>)
+        let sortedList = this.state.users.sort((a,b) => b.score - a.score)
+        let usersComponents = sortedList.map(user => <ScoreCard key={`${user.id}`} user={user}/>)
+        
         return (
             <div >
                 <h2 style={{marginTop: '0%'}}>Final Score</h2>

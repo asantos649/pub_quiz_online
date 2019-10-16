@@ -44,7 +44,7 @@ io.on('connection', (client) => {
     })
 
     client.on('resetTimer', (roomVar) => {
-        clearInterval(io.sockets.adapter.rooms[roomVar].timer)
+        // clearInterval(io.sockets.adapter.rooms[roomVar].timer)
         console.log('resettingTimer for room', roomVar)
         if(io.sockets.adapter.rooms[roomVar]){
             io.sockets.adapter.rooms[roomVar].counter = 30
