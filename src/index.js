@@ -33,8 +33,8 @@ let defaultState = {
             newQuestionsArray = action.payload
             return {...state, questions: newQuestionsArray}
         case "NEXT":
-            if (state.questions[state.questionIndex+1]){
-                return {...state, questionIndex: state.questionIndex +1 }
+            if (state.questions[action.payload.index]){
+                return {...state, questionIndex: action.payload.index }
             }else {
                 return {...state, showScore: true}
             }
@@ -45,9 +45,11 @@ let defaultState = {
             
             let newId = new Date().valueOf()
             let newUser = {...state.user, name: action.payload.user, id: newId, emoji: action.payload.emoji}
-            submitUser(newUser)
+            submitUser(action.payload.room, newUser)
             
             return {...state, room: action.payload.room, user: newUser}
+        // case 'START':
+        //     return {...state}
         case 'TIMER':
             // if(action.payload.time === 0){
             //     // resetTimer(state.room)

@@ -1,6 +1,6 @@
 const fetch = require('node-fetch');
 const io = require('socket.io')()
-const port = 8000;
+const port = 8001;
 
 
 io.on('connection', (client) => {
@@ -44,6 +44,7 @@ io.on('connection', (client) => {
     })
 
     client.on('resetTimer', (roomVar) => {
+        clearInterval(io.sockets.adapter.rooms[roomVar].timer)
         console.log('resettingTimer for room', roomVar)
         if(io.sockets.adapter.rooms[roomVar]){
             io.sockets.adapter.rooms[roomVar].counter = 30
@@ -65,24 +66,30 @@ io.on('connection', (client) => {
     })
 
     client.on('fetchQuestion', (roomVar) => {
-        fetch('https://opentdb.com/api.php?amount=3&difficulty=easy&type=multiple')
-        .then(resp => resp.json())
-        .then(data => {
-            // data.replace(/(&quot\;)/g,"\"")
-            // if (io.sockets.adapter.rooms[roomVar]){
-                io.sockets.adapter.rooms[roomVar].questions = data.results
-                io.to(roomVar).emit('question', io.sockets.adapter.rooms[roomVar].questions)
-            // }
-            
-        })
+        if (!io.sockets.adapter.rooms[roomVar].questions) {
+            fetch('https://opentdb.com/api.php?amount=3&difficulty=easy&type=multiple')
+            .then(resp => resp.json())
+            .then(data => {
+                // data.replace(/(&quot\;)/g,"\"")
+                // if (io.sockets.adapter.rooms[roomVar]){
+                    io.sockets.adapter.rooms[roomVar].questions = data.results
+                    io.sockets.adapter.rooms[roomVar].questionIndex = 0
+                    io.to(roomVar).emit('question', io.sockets.adapter.rooms[roomVar].questions)
+                // }
+                
+            })
+        }
+        
     })
 
     client.on('updateScore', (roomVar, user) => {
-        console.log(io.sockets.adapter.rooms[roomVar].users)
+        console.log(io.sockets.adapter.rooms[roomVar])
         if (!io.sockets.adapter.rooms[roomVar].users.some(userObj => userObj.id === user.id)){
             io.sockets.adapter.rooms[roomVar].users = [...io.sockets.adapter.rooms[roomVar].users, user]
-        } else {
+        } else if (io.sockets.adapter.rooms[roomVar].users.length > 0){
+            
             let newArray = io.sockets.adapter.rooms[roomVar].users.map(userObj => {
+                console.log('users', userObj)
                 if (userObj.id === user.id){
                     console.log(user)
                     return user
@@ -101,7 +108,13 @@ io.on('connection', (client) => {
     })
 
     client.on('startGame', (roomVar) => {
-        io.to(roomVar).emit('firstQuestion')
+        console.log(roomVar)
+        io.in(roomVar).emit('firstQuestion')
+    })
+
+    client.on('moveQuestionIndex', (roomVar) => {
+        io.sockets.adapter.rooms[roomVar].questionIndex ++
+        io.in(roomVar).emit('sendQuestion', io.sockets.adapter.rooms[roomVar].questionIndex)
     })
 })
 

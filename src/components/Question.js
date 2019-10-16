@@ -3,7 +3,7 @@ import QuestionHeader from './QuestionHeader'
 import QuestionText from './QuestionText'
 import QuestionAnswers from './QuestionAnswers'
 import { connect } from 'react-redux'
-import { connectNew, fetchQuestion, displayQuestion, leaveRoom, resetTimer, subscribeToTimer, receiveTimer } from '../api';
+import { connectNew, fetchQuestion, subscribeToQuestions, getQuestions, leaveRoom, resetTimer, subscribeToTimer, receiveTimer } from '../api';
 import { changeQuestions, actTimer } from '../action'
 
 // import { start } from 'repl';
@@ -13,25 +13,30 @@ class Question extends React.Component {
 
   constructor(props) {
     super(props);
-    connectNew(`${props.room}`)
+    // connectNew(`${props.room}`)
     fetchQuestion(`${props.room}`)
-    displayQuestion((err, newQuestion) => {
+    getQuestions((err, newQuestion) => {
       props.getQuestion(newQuestion)
     })
   }
 
   componentDidMount(){
 
+    subscribeToQuestions((newIndex) => {
+
+    })
 
     window.addEventListener('beforeunload', this.componentCleanup);
   }
 
   componentCleanup = () => { // this will hold the cleanup code
+    console.log('cleaningup')
     resetTimer(this.props.room)
     leaveRoom(this.props.room)
 }
 
   componentWillUnmount() {
+    console.log('cwu')
     this.componentCleanup();
     window.removeEventListener('beforeunload', this.componentCleanup);
   }

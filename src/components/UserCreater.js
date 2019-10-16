@@ -1,6 +1,7 @@
 import React from 'react';
-import { joinGame } from '../action'
+import { joinGame} from '../action'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
 import {firstQuestionHandler, connectFirst, startGame, submitUser } from '../api'
 
 
@@ -14,9 +15,26 @@ class UserCreater extends React.Component {
 
     componentDidMount(){
         firstQuestionHandler(() => {
+            console.log('hit this')
             this.props.history.push(`/game/${this.state.game}`)
         })
+
+        if( this.props.isCreate){
+            const roomID = this.makeid(4)
+            this.setState ({
+                game: roomID
+            })
+        }
+        
+
     }
+
+    // componentWillUpdate(prevProps){
+    //     const roomID = this.makeid(4)
+    //     this.setState ({
+    //         room: roomID
+    //     })
+    // }
 
     changeHandler = (e) => {
         this.setState({
@@ -34,12 +52,21 @@ class UserCreater extends React.Component {
         this.setState({
             emoji: e.target.innerText
         })
-        console.log(e.target.innerText)
     }
 
-    submitHandler(e){
+    submitHandler = (e) => {
         e.preventDefault()
         this.props.submitHandler(this.state.game, this.state.name, this.state.emoji)
+    }
+
+    startGameHandler = () => {
+
+        console.log('hit in startGame')
+        startGame(this.state.game)
+        //     () => {
+        //     // debugger
+        //     this.props.history.push(`/game/${this.state.game}`)
+        // })
     }
 
     makeid(length) {
@@ -60,7 +87,7 @@ class UserCreater extends React.Component {
                     <label className='new-game-label'>
                         <div>Game Passcode: </div>
                         {this.props.isCreate ? 
-                            <input type="text" className='new-game-input-disabled' disabled='true' value={this.makeid(4)} name="game" />  :
+                            <input type="text" className='new-game-input-disabled' disabled={true} value={this.state.game} name="game" />  :
                             <input type="text" className='new-game-input' onChange={(e) => this.changeHandler(e)} name="game" /> 
                         }
                     </label>
@@ -84,8 +111,10 @@ class UserCreater extends React.Component {
                             <button onClick={this.emojiClickHandler} type="button" className='emoji-button'>👽</button>
                         </div>
                     </div>
-                   <button type='submit' style={{fontSize:'1.25rem', marginLeft: 'auto', marginRight: 'auto'}}>Submit</button>
-                </form> 
+                    <button type='submit' style={{fontSize:'1.25rem', marginLeft: 'auto', marginRight: 'auto'}}>Submit</button>
+
+                    {this.props.isCreate ? <button type='button' onClick = {this.startGameHandler}style={{fontSize:'1.25rem', marginLeft: 'auto', marginRight: 'auto'}}>Start Game</button>  : null}
+                                   </form> 
             </div>
          
         )
@@ -97,8 +126,11 @@ class UserCreater extends React.Component {
     return { 
       submitHandler: (room, user, emoji) => {
         dispatch(joinGame(room, user, emoji))
-        }
+        },
+        // startGame: (room) => {
+        //     dispatch(startGame(room))
+        // }
     }
   }
   
-  export default connect(null, mdp)(UserCreater);
+  export default connect(null, mdp)(withRouter(UserCreater));

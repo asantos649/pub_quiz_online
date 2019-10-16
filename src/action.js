@@ -15,7 +15,7 @@ function actTimer(time, question) {
 }
 
 function joinGame(room, user, emoji) {
-    console.log('in action', emoji)
+    // console.log('in action', emoji)
     return {
         payload: {
             room: room,
@@ -26,5 +26,23 @@ function joinGame(room, user, emoji) {
     }
 }
 
+function newQuestion(index) {
+    console.log('inActionIndex', index)
+    return {
+        payload: {
+            index: index,
+        },
+        type: 'NEXT'}
+}
 
-export {changeQuestions, joinGame, actTimer}
+// function startGame(room) {
+//     return {
+//         payload: {
+//             room: room
+//         },
+//         type: 'START'
+//     }
+// }
+
+
+export {changeQuestions, newQuestion, joinGame, actTimer}

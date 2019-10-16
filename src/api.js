@@ -1,5 +1,5 @@
 import openSocket from 'socket.io-client';
-const socket = openSocket('http://localhost:8000')
+const socket = openSocket('http://localhost:8001')
 
 function connectNew(room) {
     socket.emit('connectNew', room)
@@ -34,8 +34,16 @@ function fetchQuestion(room) {
     socket.emit('fetchQuestion', room)
 }
 
-function displayQuestion(cb) {
+function getQuestions(cb) {
         socket.on('question', questions => cb(null ,questions))
+}
+
+function subscribeToQuestions(cb){
+    socket.on('sendQuestion', newQuestionIndex => cb(newQuestionIndex))
+}
+
+function nextQuestion(roomVar) {
+    socket.emit('moveQuestionIndex', roomVar)
 }
 
 function leaveRoom(room) {
@@ -54,15 +62,20 @@ function fetchScore(roomVar, cb) {
 }
 
 function submitUser(roomVar, user) {
+    console.log('submitting user', user)
     socket.emit('connectNew', roomVar, user)
 }
 
-function startGame(roomVar) {
+function startGame(roomVar, cb) {
+    console.log('in start game')
+    
     socket.emit('startGame', roomVar)
+    // socket.on('firstQuestion', cb)
+    
 }
 
 function firstQuestionHandler(cb) {
     socket.on('firstQuestion', cb)
 }
 
-export { subscribeToTimer, connectFirst, startGame, firstQuestionHandler, submitUser, fetchScore, updateScore, receiveTimer, resetTimer, startTimer, connectNew, fetchQuestion, displayQuestion, leaveRoom}
+export { subscribeToTimer, nextQuestion, subscribeToQuestions, connectFirst, startGame, firstQuestionHandler, submitUser, fetchScore, updateScore, receiveTimer, resetTimer, startTimer, connectNew, fetchQuestion, getQuestions, leaveRoom}

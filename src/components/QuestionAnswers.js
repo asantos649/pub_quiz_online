@@ -1,12 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import { startTimer, resetTimer, updateScore } from '../api'
-import { actTimer } from '../action'
+import { startTimer, resetTimer, updateScore, nextQuestion, subscribeToQuestions } from '../api'
+import { actTimer, newQuestion } from '../action'
 import {cleanString} from '../specialCharacterMap'
 
 class QuestionAnswers extends React.Component {
 
 
+    componentDidMount(){
+        subscribeToQuestions((newIndex) => {
+            this.props.nextQuestion(newIndex)
+        })
+    }
 
       shouldComponentUpdate(prevProps){
           if(prevProps.question.question !== this.props.question.question){
@@ -42,7 +47,9 @@ class QuestionAnswers extends React.Component {
             buttons.forEach(button => {
                 button.removeAttribute('id')
               })
-          this.props.nextQuestion()
+        
+          nextQuestion(this.props.room)
+          
           startTimer(this.props.room)
         }, 4000, e);
           
@@ -107,7 +114,7 @@ function shuffleArray(array) {
   function mdp(dispatch) {
     return { 
     //   getQuestion: (newQuestion) => dispatch(changeQuestions(newQuestion)) ,
-      nextQuestion: () => dispatch({type: 'NEXT'}),
+      nextQuestion: (newIndex) => dispatch(newQuestion(newIndex)),
       increaseScore: () => dispatch({type: 'SCORE'}),
     //   timerHandler: (time) => {
     //     dispatch(actTimer(time)

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import { displayQuestion, startTimer, resetTimer} from '../api'
+import { getQuestions, startTimer, resetTimer} from '../api'
 import { changeQuestions} from '../action'
 import {cleanString} from '../specialCharacterMap'
 
@@ -8,7 +8,7 @@ class QuestionText extends React.Component {
 
     constructor(props){
         super(props)  
-        displayQuestion((err, questions) => {
+        getQuestions((err, questions) => {
             this.props.getQuestion(questions)
           })
       }
