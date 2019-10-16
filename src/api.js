@@ -5,6 +5,10 @@ function connectNew(room) {
     socket.emit('connectNew', room)
 }
 
+function connectFirst(room) {
+    socket.emit('connectFirst', room)
+}
+
 function subscribeToTimer(cb, room, time) {
     // socket.on('timer', time => cb(null, time))
     
@@ -42,12 +46,23 @@ function updateScore(room, user) {
     socket.emit('updateScore', room, user)
 }
 
-function fetchScore(roomVar,cb) {
+function fetchScore(roomVar, cb) {
     
     socket.on('showScore', users => cb(users))
     socket.emit('fetchScore', roomVar)
 
 }
 
+function submitUser(roomVar, user) {
+    socket.emit('connectNew', roomVar, user)
+}
 
-export { subscribeToTimer, fetchScore, updateScore, receiveTimer, resetTimer, startTimer, connectNew, fetchQuestion, displayQuestion, leaveRoom}
+function startGame(roomVar) {
+    socket.emit('startGame', roomVar)
+}
+
+function firstQuestionHandler(cb) {
+    socket.on('firstQuestion', cb)
+}
+
+export { subscribeToTimer, connectFirst, startGame, firstQuestionHandler, submitUser, fetchScore, updateScore, receiveTimer, resetTimer, startTimer, connectNew, fetchQuestion, displayQuestion, leaveRoom}

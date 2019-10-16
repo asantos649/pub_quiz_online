@@ -20,6 +20,21 @@ class Question extends React.Component {
     })
   }
 
+  componentDidMount(){
+
+
+    window.addEventListener('beforeunload', this.componentCleanup);
+  }
+
+  componentCleanup = () => { // this will hold the cleanup code
+    resetTimer(this.props.room)
+    leaveRoom(this.props.room)
+}
+
+  componentWillUnmount() {
+    this.componentCleanup();
+    window.removeEventListener('beforeunload', this.componentCleanup);
+  }
 
   
   

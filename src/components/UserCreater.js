@@ -1,6 +1,7 @@
 import React from 'react';
 import { joinGame } from '../action'
 import { connect } from 'react-redux'
+import {firstQuestionHandler, connectFirst, startGame, submitUser } from '../api'
 
 
 class UserCreater extends React.Component {
@@ -9,6 +10,12 @@ class UserCreater extends React.Component {
         game: '',
         name: '',
         emoji: ''
+    }
+
+    componentDidMount(){
+        firstQuestionHandler(() => {
+            this.props.history.push(`/game/${this.state.game}`)
+        })
     }
 
     changeHandler = (e) => {
@@ -32,9 +39,19 @@ class UserCreater extends React.Component {
 
     submitHandler(e){
         e.preventDefault()
-        // this.props.submitHandler()
-        console.log(this.state)
+        this.props.submitHandler(this.state.game, this.state.name, this.state.emoji)
     }
+
+    makeid(length) {
+        var result           = '';
+        var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        var charactersLength = characters.length;
+        for ( var i = 0; i < length; i++ ) {
+           result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+        connectFirst(result.toUpperCase())
+        return result.toUpperCase();
+     }
 
     render(){
         return (
@@ -42,7 +59,10 @@ class UserCreater extends React.Component {
                 <form className='new-game-form' onSubmit={e => this.submitHandler(e)}>
                     <label className='new-game-label'>
                         <div>Game Passcode: </div>
-                        <input type="text" className='new-game-input' onChange={(e) => this.changeHandler(e)} name="game" />
+                        {this.props.isCreate ? 
+                            <input type="text" className='new-game-input-disabled' disabled='true' value={this.makeid(4)} name="game" />  :
+                            <input type="text" className='new-game-input' onChange={(e) => this.changeHandler(e)} name="game" /> 
+                        }
                     </label>
                     <label className='new-game-label'>
                         <div>Name: </div>
@@ -75,8 +95,8 @@ class UserCreater extends React.Component {
 
   function mdp(dispatch) {
     return { 
-      submitHandler: (room, user) => {
-        dispatch(joinGame(room, user))
+      submitHandler: (room, user, emoji) => {
+        dispatch(joinGame(room, user, emoji))
         }
     }
   }

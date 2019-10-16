@@ -14,11 +14,13 @@ function actTimer(time, question) {
     }
 }
 
-function joinGame(room, user) {
+function joinGame(room, user, emoji) {
+    console.log('in action', emoji)
     return {
         payload: {
             room: room,
-            user, user
+            user, user,
+            emoji, emoji
         },
         type: 'JOIN'
     }

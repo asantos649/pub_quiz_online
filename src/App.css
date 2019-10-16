@@ -38,10 +38,10 @@
   background: grey;
   justify-content: center;
   align-items: center;
-  /* text-align: center;
-  vertical-align: middle;
-  float: center;
-  padding-top: auto; */
+  font-size: 2rem;
+  color: white;
+  font-weight: 700;
+  text-decoration: none
 }
 
 .public-button {
@@ -51,6 +51,9 @@
   margin: 1%;
   justify-content: center;
   align-items: center;
+  font-size: 2rem;
+  color: white;
+  font-weight: 700;
 }
 
 .question-header {
@@ -162,6 +165,16 @@
   font-size: 1.2rem;
   width: auto;
   margin-left: 10px;
+}
+
+.new-game-input-disabled{
+  /* flex-grow: 1; */
+  font-size: 1.9rem;
+  /* width: auto; */
+  margin-left: 30px;
+  /* background: lightgray; */
+  border-style: none;
+  font-weight: 700;
 }
 
 .emoji-button-container{

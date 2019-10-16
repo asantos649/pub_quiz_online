@@ -4,6 +4,7 @@ import MainContainer from './containers/MainContainer'
 import { connect } from 'react-redux'
 import { connectNew, fetchQuestion, displayQuestion, leaveRoom, resetTimer, subscribeToTimer, receiveTimer } from './api';
 import { changeQuestions, actTimer } from './action'
+import {withRouter} from 'react-router-dom';
 
 
 class App extends React.Component {
@@ -57,4 +58,4 @@ function mdp(dispatch) {
   }
 }
 
-export default connect(msp, mdp)(App);
+export default connect(msp, mdp)(withRouter(App));

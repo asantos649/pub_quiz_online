@@ -7,16 +7,23 @@ io.on('connection', (client) => {
 
     // let room = ''
 
-    client.on('connectNew', (roomVar) => {
+    client.on('connectNew', (roomVar, user) => {
         if (!io.sockets.adapter.rooms[roomVar]){
             client.join(roomVar)
             io.sockets.adapter.rooms[roomVar].room = roomVar
-            io.sockets.adapter.rooms[roomVar].users = []
+            io.sockets.adapter.rooms[roomVar].users = [user]
         } else {
             client.join(roomVar)
+            io.sockets.adapter.rooms[roomVar].users.push(user)
         }
-        
-        
+    })
+
+    client.on('firstConnect', (roomVar) => {
+        client.join(roomVar)
+        if (!io.sockets.adapter.rooms[roomVar]){
+            // client.join(roomVar)
+            io.sockets.adapter.rooms[roomVar].room = roomVar
+        } 
     })
 
     client.on('disconnect', (roomVar) => {
@@ -91,6 +98,10 @@ io.on('connection', (client) => {
 
     client.on('fetchScore', (roomVar) => {
         io.to(roomVar).emit('showScore', io.sockets.adapter.rooms[roomVar].users )
+    })
+
+    client.on('startGame', (roomVar) => {
+        io.to(roomVar).emit('firstQuestion')
     })
 })
 

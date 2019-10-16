@@ -5,17 +5,18 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
-import { startTimer, resetTimer } from './api'
+import { startTimer, resetTimer, submitUser  } from './api'
+import {BrowserRouter} from 'react-router-dom';
 
 
 
 let defaultState = {
-    room: 'some-room',
+    room: '',
     user: {
       id: 'no-id',
       name: 'NA',
       score: 0,
-      emoji: '💩'
+      emoji: '🙃'
     },
     questions: [],
     questionIndex: 0,
@@ -40,8 +41,13 @@ let defaultState = {
         case 'SCORE':
             return {...state, user: ({...state.user, score: state.user.score + 100})}
         case 'JOIN':
+            // create user and then submit user to api
+            
             let newId = new Date().valueOf()
-            return {...state, room: action.payload.room, user: {...state.user, name: action.payload.user, id: newId}}
+            let newUser = {...state.user, name: action.payload.user, id: newId, emoji: action.payload.emoji}
+            submitUser(newUser)
+            
+            return {...state, room: action.payload.room, user: newUser}
         case 'TIMER':
             // if(action.payload.time === 0){
             //     // resetTimer(state.room)
@@ -68,9 +74,15 @@ let defaultState = {
 }
 
 ReactDOM.render(
+    
     <Provider store={createdStore}>
-        <App />
-    </Provider>, document.getElementById('root'));
+        <BrowserRouter>
+            <App />
+        </BrowserRouter>
+        
+    </Provider>, document.getElementById('root'))
+    
+    
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
