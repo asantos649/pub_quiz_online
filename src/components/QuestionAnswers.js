@@ -7,7 +7,8 @@ import {cleanString} from '../specialCharacterMap'
 class QuestionAnswers extends React.Component {
 
     state ={
-        answer: ''
+        answer: '',
+        disable: false
     }
 
 
@@ -17,10 +18,11 @@ class QuestionAnswers extends React.Component {
             this.props.nextQuestion(newIndex)
         })
         subscribeToShowAnswer(()=> {
-            console.log('in Show Answer')
+            console.log('in Show Answer', this.props)
             setTimeout(()=>{
                 const buttons = document.querySelectorAll('.answer-button')
                 buttons.forEach(button => {
+                    console.log('props', this.props)
                     if (button.innerText.slice(3) === cleanString(this.props.question.correct_answer)){
                     button.id = 'correct-answer'
                     } else{
@@ -34,6 +36,9 @@ class QuestionAnswers extends React.Component {
                     this.props.increaseScore()
                 }
                 updateScore(this.props.room, this.props.user)
+                this.setState({
+                    disable: false
+                })
             })
         })
     }
@@ -57,37 +62,17 @@ class QuestionAnswers extends React.Component {
     }
 
     clickHandler = (e) => {
-        // const buttons = document.querySelectorAll('.answer-button')
-    
-        // buttons.forEach(button => {
-        //   if (button.innerText.slice(3) === this.props.question.correct_answer){
-        //     button.id = 'correct-answer'
-        //   } else{
-        //     button.id = 'incorrect-answer'
-        //   }
-        // })
-       
-        //   if (e.target.innerText.slice(3) === cleanString(this.props.question.correct_answer)){
-        //     this.props.increaseScore()
-        //   }
+        if (!this.state.disable){
+            console.log('in this.clickHandler')
+            e.target.id = 'selected-answer'
 
-        e.target.id = 'selected-answer'
+            this.setState({
+                answer: e.target.innerText.slice(3),
+                disable: true
+            })
 
-        this.setState({
-            answer: e.target.innerText.slice(3)
-        })
-
-        // if (e.target.innerText.slice(3) === cleanString(this.props.question.correct_answer)){
-        //     this.props.increaseScore()
-        //   }
-
-        // e.persist()
-        // setTimeout((event) => {
-        //     updateScore(this.props.room, this.props.user)
-          nextQuestion(this.props.room)
-        // }, 1000, e);
-          
-        
+            nextQuestion(this.props.room)
+        }
       }
 
 render () {
@@ -126,7 +111,8 @@ function shuffleArray(array) {
   function msp(state) {
     let question={}
     let answers=[]
-    
+    console.log(state.questions[state.questionIndex])
+    console.log(!this.props)
     if (state.questions[state.questionIndex] && !this.props) {
       question = state.questions[state.questionIndex]
       answers = question.incorrect_answers
