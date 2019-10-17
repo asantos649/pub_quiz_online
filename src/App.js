@@ -2,8 +2,8 @@ import React from 'react';
 import './App.css';
 import MainContainer from './containers/MainContainer'
 import { connect } from 'react-redux'
-import { connectNew, fetchQuestion, getQuestions, leaveRoom, resetTimer, subscribeToTimer, receiveTimer } from './api';
-import { changeQuestions, actTimer } from './action'
+import { leaveRoom, resetTimer } from './api';
+import { changeQuestions } from './action'
 import {withRouter} from 'react-router-dom';
 
 

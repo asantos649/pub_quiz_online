@@ -22,7 +22,6 @@ function subscribeToShowAnswer(cb) {
 
 function receiveTimer(cb) {
     socket.on('timer', timestamp => {
-        console.log('geting from server', timestamp)
         cb(null, timestamp)})
 }
 
@@ -47,6 +46,7 @@ function subscribeToQuestions(cb){
 }
 
 function nextQuestion(roomVar) {
+    console.log('in nextQuestion')
     socket.emit('moveQuestionIndex', roomVar)
 }
 
@@ -66,12 +66,12 @@ function fetchScore(roomVar, cb) {
 }
 
 function submitUser(roomVar, user) {
-    console.log('submitting user', user)
+    
     socket.emit('connectNew', roomVar, user)
 }
 
 function startGame(roomVar, cb) {
-    console.log('in start game')
+
     
     socket.emit('startGame', roomVar)
     // socket.on('firstQuestion', cb)

@@ -8,26 +8,24 @@ function actTimer(time, question) {
         
         payload: {
             time: time,
-            question, question
+            question: question
         },
         type: 'TIMER'
     }
 }
 
 function joinGame(room, user, emoji) {
-    // console.log('in action', emoji)
     return {
         payload: {
             room: room,
-            user, user,
-            emoji, emoji
+            user: user,
+            emoji: emoji
         },
         type: 'JOIN'
     }
 }
 
 function newQuestion(index) {
-    console.log('inActionIndex', index)
     return {
         payload: {
             index: index,

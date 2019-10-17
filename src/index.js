@@ -5,7 +5,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
-import { startTimer, resetTimer, submitUser  } from './api'
+import { submitUser  } from './api'
 import {BrowserRouter} from 'react-router-dom';
 
 

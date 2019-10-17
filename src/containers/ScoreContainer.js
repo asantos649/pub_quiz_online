@@ -12,7 +12,7 @@ class ScoreContainer extends React.Component {
 
     componentDidMount() {
         fetchScore(this.props.room, (users) => {
-            console.log('cb for fetch score', users)
+            
             this.setState({
                 users: users
             })

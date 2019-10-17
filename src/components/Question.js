@@ -3,8 +3,8 @@ import QuestionHeader from './QuestionHeader'
 import QuestionText from './QuestionText'
 import QuestionAnswers from './QuestionAnswers'
 import { connect } from 'react-redux'
-import { connectNew, fetchQuestion, subscribeToQuestions, getQuestions, leaveRoom, resetTimer, subscribeToTimer, receiveTimer } from '../api';
-import { changeQuestions, actTimer } from '../action'
+import { fetchQuestion, subscribeToQuestions, getQuestions, leaveRoom, resetTimer} from '../api';
+import { changeQuestions} from '../action'
 
 // import { start } from 'repl';
 
@@ -36,7 +36,6 @@ class Question extends React.Component {
 }
 
   componentWillUnmount() {
-    console.log('cwu')
     this.componentCleanup();
     window.removeEventListener('beforeunload', this.componentCleanup);
   }

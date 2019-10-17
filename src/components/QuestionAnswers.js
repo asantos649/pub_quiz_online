@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import { startTimer, resetTimer, updateScore, nextQuestion, subscribeToShowAnswer, subscribeToQuestions } from '../api'
-import { actTimer, newQuestion } from '../action'
+import { resetTimer, updateScore, nextQuestion, subscribeToShowAnswer, subscribeToQuestions } from '../api'
+import { newQuestion } from '../action'
 import {cleanString} from '../specialCharacterMap'
 
 class QuestionAnswers extends React.Component {
@@ -12,27 +12,29 @@ class QuestionAnswers extends React.Component {
 
 
     componentDidMount(){
+        console.log('CDM')
         subscribeToQuestions((newIndex) => {
             this.props.nextQuestion(newIndex)
         })
         subscribeToShowAnswer(()=> {
             console.log('in Show Answer')
-            const buttons = document.querySelectorAll('.answer-button')
-            buttons.forEach(button => {
-                if (button.innerText.slice(3) === cleanString(this.props.question.correct_answer)){
-                  button.id = 'correct-answer'
-                } else{
-                  button.id = 'incorrect-answer'
+            setTimeout(()=>{
+                const buttons = document.querySelectorAll('.answer-button')
+                buttons.forEach(button => {
+                    if (button.innerText.slice(3) === cleanString(this.props.question.correct_answer)){
+                    button.id = 'correct-answer'
+                    } else{
+                    button.id = 'incorrect-answer'
+                    }
+                    if (button.innerText.slice(3) === this.state.answer){
+                        button.firstElementChild.className = 'answer-emoji'
+                    }
+                })
+                if (this.state.answer === cleanString(this.props.question.correct_answer)){
+                    this.props.increaseScore()
                 }
-                if (button.innerText.slice(3) === this.state.answer){
-                    console.log('IN HEREEEEEE', button.firstElementChild)
-                    button.firstElementChild.className = 'answer-emoji'
-                }
-              })
-            if (this.state.answer === cleanString(this.props.question.correct_answer)){
-                this.props.increaseScore()
-            }
-            updateScore(this.props.room, this.props.user)
+                updateScore(this.props.room, this.props.user)
+            })
         })
     }
 

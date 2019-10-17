@@ -14,7 +14,6 @@ class QuestionText extends React.Component {
       }
 
     render () {
-        console.log('text render', this.props)
         if(this.props.time === 0) {
             resetTimer(this.props.room)
             const buttons = document.querySelectorAll('.answer-button')

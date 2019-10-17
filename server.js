@@ -31,7 +31,7 @@ io.on('connection', (client) => {
     })
     
     client.on('subscribeToTimer', (roomVar, time) => {
-        console.log('client is subscribing to room ', time); 
+        
         if (io.sockets.adapter.rooms[roomVar]){
             io.sockets.adapter.rooms[roomVar].counter = time
             io.sockets.adapter.rooms[roomVar].counting = false
@@ -45,7 +45,7 @@ io.on('connection', (client) => {
 
     client.on('resetTimer', (roomVar) => {
         // clearInterval(io.sockets.adapter.rooms[roomVar].timer)
-        console.log('resettingTimer for room', roomVar)
+      
         if(io.sockets.adapter.rooms[roomVar]){
             io.sockets.adapter.rooms[roomVar].counter = 30
             clearInterval(io.sockets.adapter.rooms[roomVar].timer)
@@ -55,7 +55,7 @@ io.on('connection', (client) => {
 
     client.on('startTimer', (roomVar) => {
         if(io.sockets.adapter.rooms[roomVar]){
-            console.log('in start time', io.sockets.adapter.rooms[roomVar].counter)
+            
             io.sockets.adapter.rooms[roomVar].timer = setInterval(() => {
                 if (io.sockets.adapter.rooms[roomVar] && io.sockets.adapter.rooms[roomVar].counter !== 0){
                     io.sockets.adapter.rooms[roomVar].counter --;
@@ -84,21 +84,21 @@ io.on('connection', (client) => {
     })
 
     client.on('updateScore', (roomVar, user) => {
-        console.log(io.sockets.adapter.rooms[roomVar])
+        
         if (!io.sockets.adapter.rooms[roomVar].users.some(userObj => userObj.id === user.id)){
             io.sockets.adapter.rooms[roomVar].users = [...io.sockets.adapter.rooms[roomVar].users, user]
         } else if (io.sockets.adapter.rooms[roomVar].users.length > 0){
             
             let newArray = io.sockets.adapter.rooms[roomVar].users.map(userObj => {
-                console.log('users', userObj)
+                
                 if (userObj.id === user.id){
-                    console.log(user)
+                    
                     return user
                 } else {
                     return userObj
                 }
             })
-            console.log('newArray', newArray)
+            
             io.sockets.adapter.rooms[roomVar].users = newArray
         }
         
@@ -109,7 +109,6 @@ io.on('connection', (client) => {
     })
 
     client.on('startGame', (roomVar) => {
-        console.log(roomVar)
         io.in(roomVar).emit('firstQuestion')
     })
 
@@ -123,7 +122,7 @@ io.on('connection', (client) => {
             io.in(roomVar).emit('showAnswers')
             setTimeout(() => {
                 io.in(roomVar).emit('sendQuestion', io.sockets.adapter.rooms[roomVar].questionIndex)
-            }, 3000)
+            },4000)
             
         }
         

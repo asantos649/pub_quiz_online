@@ -2,7 +2,7 @@ import React from 'react';
 import { joinGame} from '../action'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
-import {firstQuestionHandler, connectFirst, startGame, submitUser } from '../api'
+import {firstQuestionHandler, connectFirst, startGame} from '../api'
 
 
 class UserCreater extends React.Component {
@@ -15,7 +15,7 @@ class UserCreater extends React.Component {
 
     componentDidMount(){
         firstQuestionHandler(() => {
-            console.log('hit this')
+       
             this.props.history.push(`/game/${this.state.game}`)
         })
 
@@ -61,7 +61,7 @@ class UserCreater extends React.Component {
 
     startGameHandler = () => {
 
-        console.log('hit in startGame')
+       
         startGame(this.state.game)
         //     () => {
         //     // debugger
