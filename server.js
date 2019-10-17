@@ -66,7 +66,7 @@ io.on('connection', (client) => {
     })
 
     client.on('fetchQuestion', (roomVar) => {
-        if (!io.sockets.adapter.rooms[roomVar].questions) {
+        if (io.sockets.adapter.rooms[roomVar] && !io.sockets.adapter.rooms[roomVar].questions) {
             fetch('https://opentdb.com/api.php?amount=3&difficulty=easy&type=multiple')
             .then(resp => resp.json())
             .then(data => {
@@ -74,6 +74,7 @@ io.on('connection', (client) => {
                 // if (io.sockets.adapter.rooms[roomVar]){
                     io.sockets.adapter.rooms[roomVar].questions = data.results
                     io.sockets.adapter.rooms[roomVar].questionIndex = 0
+                    io.sockets.adapter.rooms[roomVar].questionCounter = 0
                     io.to(roomVar).emit('question', io.sockets.adapter.rooms[roomVar].questions)
                 // }
                 
@@ -113,8 +114,19 @@ io.on('connection', (client) => {
     })
 
     client.on('moveQuestionIndex', (roomVar) => {
-        io.sockets.adapter.rooms[roomVar].questionIndex ++
-        io.in(roomVar).emit('sendQuestion', io.sockets.adapter.rooms[roomVar].questionIndex)
+        console.log(io.sockets.adapter.rooms[roomVar].questionCounter)
+        if (io.sockets.adapter.rooms[roomVar].questionCounter < io.sockets.adapter.rooms[roomVar].users.length-1){
+            io.sockets.adapter.rooms[roomVar].questionCounter ++
+        } else {
+            io.sockets.adapter.rooms[roomVar].questionIndex ++
+            io.sockets.adapter.rooms[roomVar].questionCounter = 0
+            io.in(roomVar).emit('showAnswers')
+            setTimeout(() => {
+                io.in(roomVar).emit('sendQuestion', io.sockets.adapter.rooms[roomVar].questionIndex)
+            }, 3000)
+            
+        }
+        
     })
 })
 

@@ -20,10 +20,15 @@ class QuestionAnswers extends React.Component {
             return  (this.props.question.displayAnswers[0] === '') ? true : !(prevProps.question.index === this.props.question.index)
                   
           }
-
-       
-       
       }
+
+    componentDidUpdate(){
+        resetTimer(this.props.room)
+        const buttons = document.querySelectorAll('.answer-button')
+        buttons.forEach(button => {
+                button.removeAttribute('id')
+              })
+    }
 
     clickHandler = (e) => {
         const buttons = document.querySelectorAll('.answer-button')
@@ -39,19 +44,12 @@ class QuestionAnswers extends React.Component {
           if (e.target.innerText.slice(3) === cleanString(this.props.question.correct_answer)){
             this.props.increaseScore()
           }
-        resetTimer(this.props.room)
-        // updateScore(this.props.room, this.props.user)
+
         e.persist()
         setTimeout((event) => {
             updateScore(this.props.room, this.props.user)
-            buttons.forEach(button => {
-                button.removeAttribute('id')
-              })
-        
           nextQuestion(this.props.room)
-          
-          startTimer(this.props.room)
-        }, 4000, e);
+        }, 1000, e);
           
         
       }
