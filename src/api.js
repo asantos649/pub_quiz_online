@@ -16,6 +16,10 @@ function subscribeToTimer(cb, room, time) {
 
 }
 
+function subscribeToShowAnswer(cb) {
+    socket.on('showAnswers', cb)
+}
+
 function receiveTimer(cb) {
     socket.on('timer', timestamp => {
         console.log('geting from server', timestamp)
@@ -78,4 +82,4 @@ function firstQuestionHandler(cb) {
     socket.on('firstQuestion', cb)
 }
 
-export { subscribeToTimer, nextQuestion, subscribeToQuestions, connectFirst, startGame, firstQuestionHandler, submitUser, fetchScore, updateScore, receiveTimer, resetTimer, startTimer, connectNew, fetchQuestion, getQuestions, leaveRoom}
+export { subscribeToShowAnswer, subscribeToTimer, nextQuestion, subscribeToQuestions, connectFirst, startGame, firstQuestionHandler, submitUser, fetchScore, updateScore, receiveTimer, resetTimer, startTimer, connectNew, fetchQuestion, getQuestions, leaveRoom}

@@ -1,15 +1,38 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import { startTimer, resetTimer, updateScore, nextQuestion, subscribeToQuestions } from '../api'
+import { startTimer, resetTimer, updateScore, nextQuestion, subscribeToShowAnswer, subscribeToQuestions } from '../api'
 import { actTimer, newQuestion } from '../action'
 import {cleanString} from '../specialCharacterMap'
 
 class QuestionAnswers extends React.Component {
 
+    state ={
+        answer: ''
+    }
+
 
     componentDidMount(){
         subscribeToQuestions((newIndex) => {
             this.props.nextQuestion(newIndex)
+        })
+        subscribeToShowAnswer(()=> {
+            console.log('in Show Answer')
+            const buttons = document.querySelectorAll('.answer-button')
+            buttons.forEach(button => {
+                if (button.innerText.slice(3) === cleanString(this.props.question.correct_answer)){
+                  button.id = 'correct-answer'
+                } else{
+                  button.id = 'incorrect-answer'
+                }
+                if (button.innerText.slice(3) === this.state.answer){
+                    console.log('IN HEREEEEEE', button.firstElementChild)
+                    button.firstElementChild.className = 'answer-emoji'
+                }
+              })
+            if (this.state.answer === cleanString(this.props.question.correct_answer)){
+                this.props.increaseScore()
+            }
+            updateScore(this.props.room, this.props.user)
         })
     }
 
@@ -27,29 +50,40 @@ class QuestionAnswers extends React.Component {
         const buttons = document.querySelectorAll('.answer-button')
         buttons.forEach(button => {
                 button.removeAttribute('id')
+                button.lastElementChild.className = 'hidden-emoji'
               })
     }
 
     clickHandler = (e) => {
-        const buttons = document.querySelectorAll('.answer-button')
+        // const buttons = document.querySelectorAll('.answer-button')
     
-        buttons.forEach(button => {
-          if (button.innerText.slice(3) === this.props.question.correct_answer){
-            button.id = 'correct-answer'
-          } else{
-            button.id = 'incorrect-answer'
-          }
-        })
+        // buttons.forEach(button => {
+        //   if (button.innerText.slice(3) === this.props.question.correct_answer){
+        //     button.id = 'correct-answer'
+        //   } else{
+        //     button.id = 'incorrect-answer'
+        //   }
+        // })
        
-          if (e.target.innerText.slice(3) === cleanString(this.props.question.correct_answer)){
-            this.props.increaseScore()
-          }
+        //   if (e.target.innerText.slice(3) === cleanString(this.props.question.correct_answer)){
+        //     this.props.increaseScore()
+        //   }
 
-        e.persist()
-        setTimeout((event) => {
-            updateScore(this.props.room, this.props.user)
+        e.target.id = 'selected-answer'
+
+        this.setState({
+            answer: e.target.innerText.slice(3)
+        })
+
+        // if (e.target.innerText.slice(3) === cleanString(this.props.question.correct_answer)){
+        //     this.props.increaseScore()
+        //   }
+
+        // e.persist()
+        // setTimeout((event) => {
+        //     updateScore(this.props.room, this.props.user)
           nextQuestion(this.props.room)
-        }, 1000, e);
+        // }, 1000, e);
           
         
       }
@@ -59,12 +93,12 @@ render () {
     return(
         <div className='answer-container'>
         <div className='answer-button-row'>
-            <button className='answer-button' onClick={this.clickHandler}data-id='0'>A: {cleanString(this.props.question.displayAnswers[0])}</button>
-            <button className='answer-button' onClick={this.clickHandler}data-id='1'>B: {cleanString(this.props.question.displayAnswers[1])}</button>
+            <button className='answer-button' onClick={this.clickHandler}data-id='0'>A: {cleanString(this.props.question.displayAnswers[0])}<span className='hidden-emoji'>{this.props.user.emoji}</span></button>
+            <button className='answer-button' onClick={this.clickHandler}data-id='1'>B: {cleanString(this.props.question.displayAnswers[1])}<span className='hidden-emoji'>{this.props.user.emoji}</span></button>
         </div>
         <div className='answer-button-row'>
-            <button className='answer-button' onClick={this.clickHandler}data-id='2'>C: {cleanString(this.props.question.displayAnswers[2])}</button>
-            <button className='answer-button' onClick={this.clickHandler}data-id='3'>D: {cleanString(this.props.question.displayAnswers[3])}</button>
+            <button className='answer-button' onClick={this.clickHandler}data-id='2'>C: {cleanString(this.props.question.displayAnswers[2])}<span className='hidden-emoji'>{this.props.user.emoji}</span></button>
+            <button className='answer-button' onClick={this.clickHandler}data-id='3'>D: {cleanString(this.props.question.displayAnswers[3])}<span className='hidden-emoji'>{this.props.user.emoji}</span></button>
         </div>
     </div>
     )

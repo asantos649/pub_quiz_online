@@ -114,8 +114,20 @@
   width: 35%
 }
 
+.hidden-emoji{
+  display: none;
+}
+
+.answer-emoji{
+  display: default
+}
+
 .answer-button:hover {
   background-color: rgb(174, 234, 255)
+}
+
+#selected-answer {
+  background-color: rgb(162, 218, 238)
 }
 
 #correct-answer {
@@ -161,16 +173,16 @@
 }
 
 .new-game-input{
-  flex-grow: 1;
+  flex-grow: .5;
   font-size: 1.2rem;
   width: auto;
   margin-left: 10px;
 }
 
 .new-game-input-disabled{
-  /* flex-grow: 1; */
+  /* flex-grow: .2; */
   font-size: 1.9rem;
-  /* width: auto; */
+  width: 100px;
   margin-left: 30px;
   /* background: lightgray; */
   border-style: none;
