@@ -20,6 +20,10 @@ function subscribeToShowAnswer(cb) {
     socket.on('showAnswers', cb)
 }
 
+function subscribeToUserList(cb) {
+    socket.on('addUser', newUserList => cb(newUserList))
+}
+
 function receiveTimer(cb) {
     socket.on('timer', timestamp => {
         cb(null, timestamp)})
@@ -42,7 +46,7 @@ function getQuestions(cb) {
 }
 
 function subscribeToQuestions(cb){
-    socket.on('sendQuestion', newQuestionIndex => cb(newQuestionIndex))
+    socket.on('sendQuestion', newQuestionIndex  => cb(newQuestionIndex ))
 }
 
 function nextQuestion(roomVar) {
@@ -82,4 +86,4 @@ function firstQuestionHandler(cb) {
     socket.on('firstQuestion', cb)
 }
 
-export { subscribeToShowAnswer, subscribeToTimer, nextQuestion, subscribeToQuestions, connectFirst, startGame, firstQuestionHandler, submitUser, fetchScore, updateScore, receiveTimer, resetTimer, startTimer, connectNew, fetchQuestion, getQuestions, leaveRoom}
+export { subscribeToShowAnswer, subscribeToUserList, subscribeToTimer, nextQuestion, subscribeToQuestions, connectFirst, startGame, firstQuestionHandler, submitUser, fetchScore, updateScore, receiveTimer, resetTimer, startTimer, connectNew, fetchQuestion, getQuestions, leaveRoom}

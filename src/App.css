@@ -150,9 +150,15 @@
 }
 
 .new-game-container{
-  padding: 10%;
-  padding-top: 8%;
-  height: 85%;
+  display: flex;
+  flex-direction: row;
+  /* padding: 5%; */
+  /* padding-top: 8%; */
+  height: 100%;
+}
+
+.new-game-left-container{
+  width: 85%
 }
 
 .new-game-form{
@@ -200,7 +206,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 57vw;
+  width: 45vw;
 }
 
 .emoji-button{
@@ -220,6 +226,14 @@
 button:hover {
   background-color: rgb(174, 234, 255)
 }
+
 button:focus {outline:0;}
+
+.users-list {
+  width: 35vw;
+  border: 1px;
+  border-style: solid;
+  margin-left: 2%
+}
 
 /* color for correct answer rgb(115, 206, 115)  */

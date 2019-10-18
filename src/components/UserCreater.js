@@ -3,6 +3,7 @@ import { joinGame} from '../action'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import {firstQuestionHandler, connectFirst, startGame} from '../api'
+import UserListContainer from '../containers/UserListContainer'
 
 
 class UserCreater extends React.Component {
@@ -107,9 +108,12 @@ class UserCreater extends React.Component {
     render(){
         return (
             <div className="new-game-container">
+                <div className='new-game-left-container'>
+
+                
                 <form className='new-game-form' onSubmit={e => this.submitHandler(e)}>
                     <label className='new-game-label'>
-                        <div>Game Passcode: </div>
+                        <div style={{textAlign: 'left'}}>Game Passcode: </div>
                         {this.props.isCreate ? 
                             <input type="text" className='new-game-input-disabled' disabled={true} value={this.state.game} name="game" />  :
                             <input type="text" className='new-game-input' onChange={(e) => this.changeHandler(e)} name="game" /> 
@@ -139,8 +143,10 @@ class UserCreater extends React.Component {
 
                     {this.props.isCreate ? <button type='button' onClick = {this.startGameHandler}style={{fontSize:'1.25rem', marginLeft: 'auto', marginRight: 'auto'}}>Start Game</button>  : null}
                 </form> 
-                <div>
-                    
+                </div>
+                <div className='users-list'>
+                    <UserListContainer />
+
                 </div>
             </div>
          

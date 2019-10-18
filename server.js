@@ -12,9 +12,11 @@ io.on('connection', (client) => {
             client.join(roomVar)
             io.sockets.adapter.rooms[roomVar].room = roomVar
             io.sockets.adapter.rooms[roomVar].users = [user]
+            io.in(roomVar).emit('addUser', io.sockets.adapter.rooms[roomVar].users)
         } else {
             client.join(roomVar)
             io.sockets.adapter.rooms[roomVar].users.push(user)
+            io.in(roomVar).emit('addUser', io.sockets.adapter.rooms[roomVar].users)
         }
     })
 
