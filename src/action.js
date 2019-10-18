@@ -26,6 +26,7 @@ function joinGame(room, user, emoji) {
 }
 
 function newQuestion(index) {
+    console.log('in newQuestion: ',index)
     return {
         payload: {
             index: index,

@@ -56,7 +56,15 @@ class UserCreater extends React.Component {
 
     submitHandler = (e) => {
         e.preventDefault()
-        this.props.submitHandler(this.state.game, this.state.name, this.state.emoji)
+        // this.props.submitHandler(this.state.game, this.state.name, this.state.emoji)
+        // let buttons = document.querySelectorAll('.emoji-button')
+        // buttons.forEach(button => {
+        //     console.log('beef')
+        //     if( button.id !== 'selected-emoji'){
+        //         button.disabled = true
+        //     }
+            
+        // })
     }
 
     startGameHandler = () => {
@@ -78,6 +86,22 @@ class UserCreater extends React.Component {
         }
         connectFirst(result.toUpperCase())
         return result.toUpperCase();
+     }
+
+     submitButtonHandler = (e) => {
+        e.target.innerText = this.state.emoji + ' Ready!'
+        e.target.disabled = true
+
+        this.props.submitHandler(this.state.game, this.state.name, this.state.emoji)
+        let buttons = document.querySelectorAll('.emoji-button')
+        buttons.forEach(button => {
+            console.log('beef')
+            if( button.id !== 'selected-emoji'){
+                button.disabled = true
+                button.style.opacity = '0.2'
+            }
+            
+        })
      }
 
     render(){
@@ -111,10 +135,13 @@ class UserCreater extends React.Component {
                             <button onClick={this.emojiClickHandler} type="button" className='emoji-button'>👽</button>
                         </div>
                     </div>
-                    <button type='submit' style={{fontSize:'1.25rem', marginLeft: 'auto', marginRight: 'auto'}}>Submit</button>
+                    <button type='submit' onClick={this.submitButtonHandler}style={{fontSize:'1.25rem', marginLeft: 'auto', marginRight: 'auto'}}>Submit</button>
 
                     {this.props.isCreate ? <button type='button' onClick = {this.startGameHandler}style={{fontSize:'1.25rem', marginLeft: 'auto', marginRight: 'auto'}}>Start Game</button>  : null}
-                                   </form> 
+                </form> 
+                <div>
+                    
+                </div>
             </div>
          
         )

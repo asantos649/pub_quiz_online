@@ -207,10 +207,19 @@
   flex-grow: .2;
   font-size: 2rem;
   padding-top: 1%;
+  
+}
+.emoji-button:hover {
+  background-color: rgb(174, 234, 255)
 }
 
 #selected-emoji{
+  background-color: rgb(162, 218, 238)
+}
+
+button:hover {
   background-color: rgb(174, 234, 255)
 }
+button:focus {outline:0;}
 
 /* color for correct answer rgb(115, 206, 115)  */

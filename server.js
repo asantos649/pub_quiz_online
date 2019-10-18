@@ -55,7 +55,9 @@ io.on('connection', (client) => {
 
     client.on('startTimer', (roomVar) => {
         if(io.sockets.adapter.rooms[roomVar]){
-            
+            if (io.sockets.adapter.rooms[roomVar].timer){
+                clearInterval(io.sockets.adapter.rooms[roomVar].timer)
+            }
             io.sockets.adapter.rooms[roomVar].timer = setInterval(() => {
                 if (io.sockets.adapter.rooms[roomVar] && io.sockets.adapter.rooms[roomVar].counter !== 0){
                     io.sockets.adapter.rooms[roomVar].counter --;

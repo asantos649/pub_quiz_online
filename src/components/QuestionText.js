@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import { getQuestions, startTimer, resetTimer} from '../api'
-import { changeQuestions} from '../action'
+import { getQuestions, startTimer, resetTimer, nextQuestion} from '../api'
+import { changeQuestions, newQuestion} from '../action'
 import {cleanString} from '../specialCharacterMap'
 
 class QuestionText extends React.Component {
@@ -16,23 +16,25 @@ class QuestionText extends React.Component {
     render () {
         if(this.props.time === 0) {
             resetTimer(this.props.room)
-            const buttons = document.querySelectorAll('.answer-button')
-                buttons.forEach(button => {
-                    if (button.innerText.slice(3) === this.props.question.correct_answer){
-                      button.id = 'correct-answer'
-                    } else{
-                      button.id = 'incorrect-answer'
-                    }
-                  })
-            setTimeout(() => {
-                this.props.nextQuestion()
-                buttons.forEach(button => {
-                    button.removeAttribute('id')
-                  })
-                startTimer(this.props.room)
-            }, 4000)
+            nextQuestion(this.props.room)
+            // const buttons = document.querySelectorAll('.answer-button')
+            //     buttons.forEach(button => {
+            //         if (button.innerText.slice(3) === this.props.question.correct_answer){
+            //           button.id = 'correct-answer'
+            //         } else{
+            //           button.id = 'incorrect-answer'
+            //         }
+            //       })
+            // setTimeout(() => {
+            //     this.props.nextQuestion()
+            //     buttons.forEach(button => {
+            //         button.removeAttribute('id')
+            //       })
+            //     startTimer(this.props.room)
+            // }, 4000)
         }
         if(this.props.question){
+            // startTimer(this.props.room)
         return(
             <div className='question-text-box'>
                 <div className='question-category'>{this.props.question.category}</div>
@@ -68,7 +70,7 @@ class QuestionText extends React.Component {
   function mdp(dispatch) {
     return { 
       getQuestion: (newQuestion) => dispatch(changeQuestions(newQuestion)) ,
-      nextQuestion: () => dispatch({type: 'NEXT'})
+      nextQuestion: (newIndex) => dispatch(newQuestion(newIndex))
     }
   }
     

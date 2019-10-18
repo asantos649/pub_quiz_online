@@ -13,9 +13,9 @@ class QuestionHeader extends React.Component {
             this.props.timerHandler(time, this.props.user)
           })
         resetTimer(this.props.room)
-        setTimeout(()=>{
-            startTimer(this.props.room)
-        })
+        // setTimeout(()=>{
+        //     startTimer(this.props.room)
+        // })
                 
         subscribeToTimer(((err, time) =>  {
           this.props.timerHandler(time)
