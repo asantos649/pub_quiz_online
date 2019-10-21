@@ -2,8 +2,8 @@ import React from 'react';
 import './App.css';
 import MainContainer from './containers/MainContainer'
 import { connect } from 'react-redux'
-import { leaveRoom, resetTimer } from './api';
-import { changeQuestions } from './action'
+import { leaveRoom, resetTimer, subscribeToTimer } from './api';
+import { changeQuestions, actTimer } from './action'
 import {withRouter} from 'react-router-dom';
 
 
@@ -20,17 +20,18 @@ class App extends React.Component {
 
   componentDidMount(){
 
-
     window.addEventListener('beforeunload', this.componentCleanup);
   }
 
   componentCleanup = () => { // this will hold the cleanup code
     resetTimer(this.props.room)
     leaveRoom(this.props.room)
+    
 }
 
   componentWillUnmount() {
     this.componentCleanup();
+    
     window.removeEventListener('beforeunload', this.componentCleanup);
   }
 
@@ -56,6 +57,7 @@ function mdp(dispatch) {
     //   dispatch(actTimer(time, user)
     // )}}
   }
+  
 }
 
 export default connect(msp, mdp)(withRouter(App));

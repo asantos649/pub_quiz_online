@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux'
 import { getQuestions, startTimer, resetTimer, nextQuestion} from '../api'
 import { changeQuestions, newQuestion} from '../action'
+import { withRouter } from 'react-router'
 import {cleanString} from '../specialCharacterMap'
 
 class QuestionText extends React.Component {
@@ -13,25 +14,17 @@ class QuestionText extends React.Component {
           })
       }
 
+    //   componentDidMount(){
+    //       if(!this.props.question){
+    //         this.props.history.push('/')
+    //       }
+        
+    //   }
+
     render () {
         if(this.props.time === 0) {
             resetTimer(this.props.room)
             nextQuestion(this.props.room)
-            // const buttons = document.querySelectorAll('.answer-button')
-            //     buttons.forEach(button => {
-            //         if (button.innerText.slice(3) === this.props.question.correct_answer){
-            //           button.id = 'correct-answer'
-            //         } else{
-            //           button.id = 'incorrect-answer'
-            //         }
-            //       })
-            // setTimeout(() => {
-            //     this.props.nextQuestion()
-            //     buttons.forEach(button => {
-            //         button.removeAttribute('id')
-            //       })
-            //     startTimer(this.props.room)
-            // }, 4000)
         }
         if(this.props.question){
             // startTimer(this.props.room)
@@ -42,6 +35,7 @@ class QuestionText extends React.Component {
             </div>
         )
         } else {
+            
             return <div></div>
         }
     }
@@ -49,6 +43,7 @@ class QuestionText extends React.Component {
   function msp(state) {
     let question={}
     let answers=[]
+  
     if (state.questions[state.questionIndex] && !state.question) {
       question = state.questions[state.questionIndex]
       answers = [...question.incorrect_answers]
@@ -74,4 +69,4 @@ class QuestionText extends React.Component {
     }
   }
     
-    export default connect(msp, mdp)(QuestionText);
+    export default connect(msp, mdp)(withRouter(QuestionText));

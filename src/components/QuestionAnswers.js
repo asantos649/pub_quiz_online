@@ -17,11 +17,11 @@ class QuestionAnswers extends React.Component {
             this.props.nextQuestion(newIndex)
         })
         subscribeToShowAnswer(()=> {
-            console.log('in Show Answer', this.props)
+           
             setTimeout(()=>{
                 const buttons = document.querySelectorAll('.answer-button')
                 buttons.forEach(button => {
-                    console.log('props', this.props)
+                    
                     if (button.innerText.slice(3) === cleanString(this.props.question.correct_answer)){
                     button.id = 'correct-answer'
                     } else{
@@ -52,6 +52,7 @@ class QuestionAnswers extends React.Component {
       }
 
     componentDidUpdate(){
+       
         resetTimer(this.props.room)
         setTimeout(() => {
             startTimer(this.props.room)})
@@ -66,9 +67,9 @@ class QuestionAnswers extends React.Component {
     }
 
     clickHandler = (e) => {
-        console.log('focus', document.hasFocus())
+        
         if (!this.state.disable && document.hasFocus()){
-            console.log('in this.clickHandler')
+           
             e.target.id = 'selected-answer'
             // resetTimer(this.props.room)
             this.setState({

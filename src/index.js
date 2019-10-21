@@ -5,7 +5,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
-import { submitUser  } from './api'
+import { submitUser, resetGame  } from './api'
 import {BrowserRouter} from 'react-router-dom';
 
 
@@ -40,6 +40,11 @@ let defaultState = {
             }
         case 'SCORE':
             return {...state, user: ({...state.user, score: state.user.score + 100})}
+        case 'RESET':
+            // resetGame(state.room)
+            return {...state, questionIndex: 0, showScore: false, user: ({...state.user, score: 0})}
+        case 'CLEAN':
+            return defaultState
         case 'JOIN':
             // create user and then submit user to api
             
@@ -48,25 +53,8 @@ let defaultState = {
             submitUser(action.payload.room, newUser)
             
             return {...state, room: action.payload.room, user: newUser}
-        // case 'START':
-        //     return {...state}
+
         case 'TIMER':
-            // if(action.payload.time === 0){
-            //     // resetTimer(state.room)
-            //     const buttons = document.querySelectorAll('.answer-button')
-            //     buttons.forEach(button => {
-            //         if (button.innerText.slice(3) === action.payload.question.correct_answer){
-            //           button.id = 'correct-answer'
-            //         } else{
-            //           button.id = 'incorrect-answer'
-            //         }
-            //       })
-            //     //   setTimeout(() => {
-            //     //     // dispatch({type: 'NEXT'})
-            //     //     startTimer(state.room)
-            //     //   }, 4000)payload
-            //       return {...state, timer: action.}
-            // } else {
                 return {...state, timer: action.payload.time}
             // }
             

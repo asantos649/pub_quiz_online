@@ -5,6 +5,8 @@ import QuestionAnswers from './QuestionAnswers'
 import { connect } from 'react-redux'
 import { fetchQuestion, subscribeToQuestions, getQuestions, leaveRoom, resetTimer} from '../api';
 import { changeQuestions} from '../action'
+import { withRouter } from 'react-router'
+
 
 // import { start } from 'repl';
 
@@ -26,24 +28,35 @@ class Question extends React.Component {
 
     })
 
-    window.addEventListener('beforeunload', this.componentCleanup);
+    if(!this.props.room){
+      this.props.history.push('/')
+    } 
+
+    if(this.props.room !== ''){
+      window.addEventListener('beforeunload', this.componentCleanup)
+    }
+      
+    
   }
 
-  componentCleanup = () => { // this will hold the cleanup code
-    console.log('cleaningup')
-    resetTimer(this.props.room)
-    leaveRoom(this.props.room)
-}
+//   componentCleanup = () => { // this will hold the cleanup code
+//     console.log('exiting', this.props.room)
+//     resetTimer(this.props.room)
+//     leaveRoom(this.props.room)
+//     debugger
+// }
 
-  componentWillUnmount() {
-    this.componentCleanup();
-    window.removeEventListener('beforeunload', this.componentCleanup);
-  }
+//   componentWillUnmount() {
+//     console.log('props in CWU', this.props)
+//     this.componentCleanup();
+//     window.removeEventListener('beforeunload', this.componentCleanup);
+//   }
 
   
   
   render() {
 
+      console.log('in render', this.props)
    
       return (
         <div className='home'>
@@ -71,4 +84,4 @@ function mdp(dispatch) {
   }
 }
 
-export default connect(msp, mdp)(Question);
+export default connect(msp, mdp)(withRouter(Question));

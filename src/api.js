@@ -16,6 +16,10 @@ function subscribeToTimer(cb, room, time) {
 
 }
 
+// function unsubscribeToTimer(roomVar){
+//     socket.emit('unsubscribeTimer', roomVar)
+// }
+
 function subscribeToShowAnswer(cb) {
     socket.on('showAnswers', cb)
 }
@@ -49,13 +53,20 @@ function subscribeToQuestions(cb){
     socket.on('sendQuestion', newQuestionIndex  => cb(newQuestionIndex ))
 }
 
+function subscribeToResetGame(cb, roomVar) {
+    
+    socket.on('startResetGame', cb)
+    socket.emit('resetGame', roomVar)
+}
+
 function nextQuestion(roomVar) {
-    console.log('in nextQuestion')
+ 
     socket.emit('moveQuestionIndex', roomVar)
 }
 
 function leaveRoom(room) {
-    socket.emit('disconnect', room)
+    console.log('API Leaving', room)
+    socket.emit('disconnectRoom', room)
 }
 
 function updateScore(room, user) {
@@ -86,4 +97,39 @@ function firstQuestionHandler(cb) {
     socket.on('firstQuestion', cb)
 }
 
-export { subscribeToShowAnswer, subscribeToUserList, subscribeToTimer, nextQuestion, subscribeToQuestions, connectFirst, startGame, firstQuestionHandler, submitUser, fetchScore, updateScore, receiveTimer, resetTimer, startTimer, connectNew, fetchQuestion, getQuestions, leaveRoom}
+function killGame(roomVar) {
+    socket.emit('killGame', roomVar)
+}
+
+function subscribeToExit(cb) {
+    socket.on('exitGame', cb)
+}
+
+// function resetGame(roomVar) {
+//     socket.emit('resetGame', roomVar)
+// }
+
+export { 
+     subscribeToShowAnswer,
+     subscribeToResetGame,
+     subscribeToExit,
+     killGame,
+    //  resetGame,
+     subscribeToUserList,
+     subscribeToTimer,
+     nextQuestion,
+     subscribeToQuestions,
+     connectFirst,
+     startGame,
+     firstQuestionHandler,
+     submitUser,
+     fetchScore,
+     updateScore,
+     receiveTimer,
+     resetTimer,
+     startTimer,
+     connectNew,
+     fetchQuestion,
+     getQuestions,
+     leaveRoom
+}

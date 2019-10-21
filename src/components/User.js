@@ -1,7 +1,7 @@
 import React from 'react';
 
 function User(props) {
-    console.log(props)
+   
     return (
      <div className='score-card'>
          <div>{props.user.emoji} </div>

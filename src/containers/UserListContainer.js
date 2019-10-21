@@ -12,12 +12,14 @@ class UserListContainer extends React.Component {
 
     componentDidMount() {
         subscribeToUserList((newUsers)=>{
-            console.log('in sub to user')
+    
             this.setState({
                 users: newUsers
             })
         })
     }
+
+ 
 
     render() {
         // debugger

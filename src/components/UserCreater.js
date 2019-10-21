@@ -57,15 +57,7 @@ class UserCreater extends React.Component {
 
     submitHandler = (e) => {
         e.preventDefault()
-        // this.props.submitHandler(this.state.game, this.state.name, this.state.emoji)
-        // let buttons = document.querySelectorAll('.emoji-button')
-        // buttons.forEach(button => {
-        //     console.log('beef')
-        //     if( button.id !== 'selected-emoji'){
-        //         button.disabled = true
-        //     }
-            
-        // })
+   
     }
 
     startGameHandler = () => {
@@ -96,7 +88,7 @@ class UserCreater extends React.Component {
         this.props.submitHandler(this.state.game, this.state.name, this.state.emoji)
         let buttons = document.querySelectorAll('.emoji-button')
         buttons.forEach(button => {
-            console.log('beef')
+           
             if( button.id !== 'selected-emoji'){
                 button.disabled = true
                 button.style.opacity = '0.2'

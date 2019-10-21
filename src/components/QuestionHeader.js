@@ -22,6 +22,10 @@ class QuestionHeader extends React.Component {
         }), this.props.room, 30);
       }
 
+      componentWillUnmount(){
+        resetTimer(this.props.room)
+      }
+
 render () {
     if(this.props.question){
     return(

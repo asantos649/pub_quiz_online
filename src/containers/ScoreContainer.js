@@ -1,7 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import { fetchScore } from '../api';
+import { fetchScore, resetTimer, startGame, subscribeToResetGame, subscribeToExit, leaveRoom, killGame } from '../api';
 import ScoreCard from '../components/ScoreCard'
+import { type } from 'os';
+import { withRouter } from 'react-router'
+
 // import Question from '../components/Question'
 
 class ScoreContainer extends React.Component {
@@ -11,12 +14,38 @@ class ScoreContainer extends React.Component {
     }
 
     componentDidMount() {
+        resetTimer(this.props.room)
         fetchScore(this.props.room, (users) => {
             
             this.setState({
                 users: users
             })
         })
+
+        subscribeToExit(() => {
+           console.log('exiting', this.props.room)
+            resetTimer(this.props.room)
+            leaveRoom(this.props.room)
+            // this.props.resetState()
+            setTimeout( () => {
+                this.props.history.push('/')
+                this.props.resetState()
+            })
+            
+        })
+    }
+
+    playAgainHandler = () => {
+        resetTimer(this.props.room)
+        subscribeToResetGame(() => {
+            startGame(this.props.room)
+            this.props.resetGame()
+        }, this.props.room)
+        // startGame(this.props.room)
+    }
+
+    exitHandler = () => {
+        killGame(this.props.room)
     }
 
     render() {
@@ -26,7 +55,10 @@ class ScoreContainer extends React.Component {
         return (
             <div >
                 <h2 style={{marginTop: '0%'}}>Final Score</h2>
-              {usersComponents}
+                {usersComponents}
+                <button className='play-again-button' onClick={this.playAgainHandler}>Play Again</button>
+                <button className='exit-button' onClick={this.exitHandler}>Exit</button>
+
             </div>
           );
     }
@@ -38,5 +70,12 @@ class ScoreContainer extends React.Component {
       }
     
   }
+
+  function mdp(dispatch){
+    return {
+        resetGame: () => dispatch({type: 'RESET'}), 
+        resetState: () => dispatch({type: 'CLEAN'})
+    }
+  }
   
-  export default connect(msp)(ScoreContainer);
+  export default connect(msp, mdp)(withRouter(ScoreContainer));

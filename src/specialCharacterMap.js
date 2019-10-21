@@ -93,6 +93,9 @@ const specialChar = {
 
 function cleanString(string) {
     let newString
+    if(!string){
+      return false
+    }
     if (string.match(/&.*?;/g)){
       string.match(/&.*?;/g).forEach((str)=>{
         const regex = new RegExp(str, 'g')
