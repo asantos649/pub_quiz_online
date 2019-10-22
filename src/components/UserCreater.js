@@ -105,7 +105,7 @@ class UserCreater extends React.Component {
                 
                 <form className='new-game-form' onSubmit={e => this.submitHandler(e)}>
                     <label className='new-game-label'>
-                        <div style={{textAlign: 'left'}}>Game Passcode: </div>
+                        <div style={{textAlign: 'left'}}>Passcode: </div>
                         {this.props.isCreate ? 
                             <input type="text" className='new-game-input-disabled' disabled={true} value={this.state.game} name="game" />  :
                             <input type="text" className='new-game-input' onChange={(e) => this.changeHandler(e)} name="game" /> 

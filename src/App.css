@@ -14,10 +14,9 @@ input {
 
 .title {
   margin-bottom: 0px;
-  color: #6290C3;
+  color: rgb(85, 133, 187);
   font-family: 'impact';
   font-stretch: extra-expanded;
-  
 }
 
 .main-container {
@@ -223,7 +222,7 @@ a:-webkit-any-link {
 }
 
 .new-game-left-container{
-  width: 85%
+  width: 75%
 }
 
 .new-game-form{
