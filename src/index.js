@@ -21,7 +21,7 @@ let defaultState = {
     questions: [],
     questionIndex: 0,
     timer: 30,
-    showScore: false
+    showScore: false,
   }
 
   const createdStore = createStore(reducer, defaultState)

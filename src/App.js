@@ -21,6 +21,8 @@ class App extends React.Component {
   componentDidMount(){
 
     window.addEventListener('beforeunload', this.componentCleanup);
+
+    
   }
 
   componentCleanup = () => { // this will hold the cleanup code
@@ -38,6 +40,7 @@ class App extends React.Component {
   render(){
     return (
       <div className="App">
+        <h1 className='title'>UNTITLED TRIVIA GAME</h1>
         <MainContainer />
       </div>
     );

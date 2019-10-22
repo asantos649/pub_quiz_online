@@ -4,8 +4,8 @@ function ScoreCard(props) {
     return (
      <div className='score-card'>
          <div>{props.user.emoji} </div>
-         <div>{props.user.name}</div>
-         <div>{props.user.score}</div>
+         <div className='score-value'>{props.user.name}</div>
+         <div className='score-value'>{props.user.score}</div>
      </div>
     );
   }

@@ -21,7 +21,7 @@ class UserCreater extends React.Component {
         })
 
         if( this.props.isCreate){
-            const roomID = this.makeid(4)
+            const roomID = this.makeid(6)
             this.setState ({
                 game: roomID
             })
@@ -131,9 +131,10 @@ class UserCreater extends React.Component {
                             <button onClick={this.emojiClickHandler} type="button" className='emoji-button'>👽</button>
                         </div>
                     </div>
-                    <button type='submit' onClick={this.submitButtonHandler}style={{fontSize:'1.25rem', marginLeft: 'auto', marginRight: 'auto'}}>Submit</button>
-
-                    {this.props.isCreate ? <button type='button' onClick = {this.startGameHandler}style={{fontSize:'1.25rem', marginLeft: 'auto', marginRight: 'auto'}}>Start Game</button>  : null}
+                    <div className = 'start-button-container'>
+                        <button className= 'submit-button' type='submit' onClick={this.submitButtonHandler}style={{fontSize:'1.25rem', marginLeft: 'auto', marginRight: 'auto'}}>Submit</button>
+                        {this.props.isCreate ? <button type='button' onClick = {this.startGameHandler}style={{fontSize:'1.25rem', marginLeft: 'auto', marginRight: 'auto'}}>Start Game</button>  : null}
+                    </div>
                 </form> 
                 </div>
                 <div className='users-list'>

@@ -134,6 +134,8 @@ io.on('connection', (client) => {
             io.sockets.adapter.rooms[roomVar].questionIndex ++
             io.sockets.adapter.rooms[roomVar].questionCounter = 0
             io.in(roomVar).emit('showAnswers')
+            io.sockets.adapter.rooms[roomVar].counter = 30
+            clearInterval(io.sockets.adapter.rooms[roomVar].timer)
             setTimeout(() => {
                 io.in(roomVar).emit('sendQuestion', io.sockets.adapter.rooms[roomVar].questionIndex)
             },4000)
@@ -149,19 +151,23 @@ io.on('connection', (client) => {
         if (io.sockets.adapter.rooms[roomVar].questionCounter < io.sockets.adapter.rooms[roomVar].users.length-1){
             io.sockets.adapter.rooms[roomVar].questionCounter ++
         } else {
-        fetch('https://opentdb.com/api.php?amount=3&difficulty=easy&type=multiple')
-            .then(resp => resp.json())
-            .then(data => {
+            const newList = io.sockets.adapter.rooms[roomVar].users.map(user => {
+                    return {...user, score: 0}
+                })
+            io.sockets.adapter.rooms[roomVar].users = newList
+            fetch('https://opentdb.com/api.php?amount=3&difficulty=easy&type=multiple')
+                .then(resp => resp.json())
+                .then(data => {
 
-                    io.sockets.adapter.rooms[roomVar].questions = data.results
-                    io.sockets.adapter.rooms[roomVar].questionIndex = 0
-                    io.sockets.adapter.rooms[roomVar].questionCounter = 0
-                    io.to(roomVar).emit('startResetGame')
-                    io.to(roomVar).emit('question', io.sockets.adapter.rooms[roomVar].questions)
-                    io.in(roomVar).emit('firstQuestion')
-                    clearInterval(io.sockets.adapter.rooms[roomVar].timer)
-            })
-        }
+                        io.sockets.adapter.rooms[roomVar].questions = data.results
+                        io.sockets.adapter.rooms[roomVar].questionIndex = 0
+                        io.sockets.adapter.rooms[roomVar].questionCounter = 0
+                        io.to(roomVar).emit('startResetGame')
+                        io.to(roomVar).emit('question', io.sockets.adapter.rooms[roomVar].questions)
+                        io.in(roomVar).emit('firstQuestion')
+                        clearInterval(io.sockets.adapter.rooms[roomVar].timer)
+                })
+            }
     })
 
 })
