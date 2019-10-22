@@ -14,7 +14,7 @@ input {
 
 .title {
   margin-bottom: 0px;
-  color: #736CED;
+  color: #6290C3;
   font-family: 'impact';
   font-stretch: extra-expanded;
   
@@ -65,7 +65,7 @@ input {
 .private-button:hover {
   font-size: 4rem;
   width: 100%;
-  color: rgb(98, 93, 206);
+  color: #51E5FF;
   font-style: underline
   /* white-space: nowrap; */
 }
@@ -97,7 +97,7 @@ input {
   flex-direction: row;
   border-bottom-width: 1px;
   border-bottom-style: solid;
-  border-color: #736CED;
+  border-color: #51E5FF;
   padding-bottom: 1%;
   margin-bottom: 2%;
 }
@@ -105,7 +105,7 @@ input {
 .question-text-box {
   border: 2px;
   border-style: none;
-  border-color: #736CED;
+  border-color: #51E5FF;
   margin: 4%;
   height: 30vh;
   padding: 2%;
