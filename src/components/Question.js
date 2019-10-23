@@ -39,24 +39,11 @@ class Question extends React.Component {
     
   }
 
-//   componentCleanup = () => { // this will hold the cleanup code
-//     console.log('exiting', this.props.room)
-//     resetTimer(this.props.room)
-//     leaveRoom(this.props.room)
-//     debugger
-// }
-
-//   componentWillUnmount() {
-//     console.log('props in CWU', this.props)
-//     this.componentCleanup();
-//     window.removeEventListener('beforeunload', this.componentCleanup);
-//   }
-
   
   
   render() {
 
-      console.log('in render', this.props)
+    
    
       return (
         <div className='home'>

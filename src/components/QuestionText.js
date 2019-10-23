@@ -46,7 +46,7 @@ class QuestionText extends React.Component {
         const answerButton = document.querySelector('#selected-answer')
         if(this.props.time === 0 && this.canGetQuestion && !answerButton) {
             this.canGetQuestion = false
-            console.log('rendertext', this.canGetQuestion)
+       
             setTimeout(() => {
                 resetTimer(this.props.room)
                 nextQuestion(this.props.room)

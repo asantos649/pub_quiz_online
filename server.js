@@ -29,13 +29,13 @@ io.on('connection', (client) => {
     })
 
     client.on('disconnectRoom', (roomVar) => {
-        console.log('leaving room', roomVar)
+        
         client.leave(roomVar)
         // clearInterval(io.sockets.adapter.rooms[roomVar].timer)
     })
     
     client.on('subscribeToTimer', (roomVar, time) => {
-        console.log('number of subscribeToTimer')
+        
         if (io.sockets.adapter.rooms[roomVar]){
             io.sockets.adapter.rooms[roomVar].counter = time
             io.sockets.adapter.rooms[roomVar].counting = false
@@ -97,7 +97,7 @@ io.on('connection', (client) => {
     })
 
     client.on('updateScore', (roomVar, user) => {
-        console.log('trying to update score', user)
+       
         if(io.sockets.adapter.rooms[roomVar]){
             if (!io.sockets.adapter.rooms[roomVar].users.some(userObj => userObj.id === user.id)){
                 io.sockets.adapter.rooms[roomVar].users = [...io.sockets.adapter.rooms[roomVar].users, user]
@@ -118,7 +118,7 @@ io.on('connection', (client) => {
     })
 
     client.on('fetchScore', (roomVar) => {
-        console.log('trying to fetch score', io.sockets.adapter.rooms[roomVar].users)
+        
         io.to(roomVar).emit('showScore', io.sockets.adapter.rooms[roomVar].users )
     })
 
@@ -148,7 +148,7 @@ io.on('connection', (client) => {
 
     client.on("resetGame", (roomVar, newRoom) => {
         
-        console.log('in resetGame')
+      
         if (io.sockets.adapter.rooms[roomVar].questionCounter < io.sockets.adapter.rooms[roomVar].users.length-1){
             io.sockets.adapter.rooms[roomVar].questionCounter ++
         } else {
@@ -156,7 +156,7 @@ io.on('connection', (client) => {
                     return {...user, score: 0}
                 })
             io.sockets.adapter.rooms[roomVar].users = newList
-            console.log('new users', io.sockets.adapter.rooms[roomVar].users)
+           
             fetch('https://opentdb.com/api.php?amount=3&difficulty=easy&type=multiple')
                 .then(resp => resp.json())
                 .then(data => {
@@ -175,4 +175,4 @@ io.on('connection', (client) => {
 })
 
 io.listen(port)
-console.log('listening on port', port);
+

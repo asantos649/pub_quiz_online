@@ -32,13 +32,10 @@ class QuestionAnswers extends React.Component {
                     }
                 })
                 if (this.state.answer === cleanString(this.props.question.correct_answer)){
-                    console.log('trying to increase score with this answer', this.state.answer)
                     this.props.increaseScore()
                 }
                 updateScore(this.props.room, this.props.user)
-                // this.setState({
-                //     disable: false
-                // })
+              
             })
         })
     }

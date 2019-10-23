@@ -23,7 +23,7 @@ class ScoreContainer extends React.Component {
         })
 
         subscribeToExit(() => {
-           console.log('exiting', this.props.room)
+          
             resetTimer(this.props.room)
             leaveRoom(this.props.room)
             // this.props.resetState()

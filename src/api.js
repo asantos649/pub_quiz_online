@@ -65,7 +65,7 @@ function nextQuestion(roomVar) {
 }
 
 function leaveRoom(room) {
-    console.log('API Leaving', room)
+  
     socket.emit('disconnectRoom', room)
 }
 
