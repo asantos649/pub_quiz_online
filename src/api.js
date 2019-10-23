@@ -53,10 +53,10 @@ function subscribeToQuestions(cb){
     socket.on('sendQuestion', newQuestionIndex  => cb(newQuestionIndex ))
 }
 
-function subscribeToResetGame(cb, roomVar) {
-    
+function subscribeToResetGame(cb, oldRoom, newRoom) {
+    socket.off('showAnswers')
     socket.on('startResetGame', cb)
-    socket.emit('resetGame', roomVar)
+    socket.emit('resetGame', oldRoom, newRoom)
 }
 
 function nextQuestion(roomVar) {

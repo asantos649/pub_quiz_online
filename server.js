@@ -69,7 +69,7 @@ io.on('connection', (client) => {
                 clearInterval(io.sockets.adapter.rooms[roomVar].timer)
             }
             io.sockets.adapter.rooms[roomVar].timer = setInterval(() => {
-                console.log('trying to send', io.sockets.adapter.rooms[roomVar].counter)
+                
                 if (io.sockets.adapter.rooms[roomVar] && io.sockets.adapter.rooms[roomVar].counter !== 0){
                     io.sockets.adapter.rooms[roomVar].counter --;
                 }    
@@ -97,6 +97,7 @@ io.on('connection', (client) => {
     })
 
     client.on('updateScore', (roomVar, user) => {
+        console.log('trying to update score', user)
         if(io.sockets.adapter.rooms[roomVar]){
             if (!io.sockets.adapter.rooms[roomVar].users.some(userObj => userObj.id === user.id)){
                 io.sockets.adapter.rooms[roomVar].users = [...io.sockets.adapter.rooms[roomVar].users, user]
@@ -114,11 +115,10 @@ io.on('connection', (client) => {
                 io.sockets.adapter.rooms[roomVar].users = newArray
             }
         }
-        
-        
     })
 
     client.on('fetchScore', (roomVar) => {
+        console.log('trying to fetch score', io.sockets.adapter.rooms[roomVar].users)
         io.to(roomVar).emit('showScore', io.sockets.adapter.rooms[roomVar].users )
     })
 
@@ -127,7 +127,7 @@ io.on('connection', (client) => {
     })
 
     client.on('moveQuestionIndex', (roomVar) => {
-        console.log(io.sockets.adapter.rooms[roomVar].questionCounter)
+        
         if (io.sockets.adapter.rooms[roomVar].questionCounter < io.sockets.adapter.rooms[roomVar].users.length-1){
             io.sockets.adapter.rooms[roomVar].questionCounter ++
         } else {
@@ -146,7 +146,8 @@ io.on('connection', (client) => {
         io.in(roomVar).emit('exitGame')
     })
 
-    client.on("resetGame", (roomVar) => {
+    client.on("resetGame", (roomVar, newRoom) => {
+        
         console.log('in resetGame')
         if (io.sockets.adapter.rooms[roomVar].questionCounter < io.sockets.adapter.rooms[roomVar].users.length-1){
             io.sockets.adapter.rooms[roomVar].questionCounter ++
@@ -155,6 +156,7 @@ io.on('connection', (client) => {
                     return {...user, score: 0}
                 })
             io.sockets.adapter.rooms[roomVar].users = newList
+            console.log('new users', io.sockets.adapter.rooms[roomVar].users)
             fetch('https://opentdb.com/api.php?amount=3&difficulty=easy&type=multiple')
                 .then(resp => resp.json())
                 .then(data => {
