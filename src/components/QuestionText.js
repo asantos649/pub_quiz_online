@@ -12,7 +12,11 @@ class QuestionText extends React.Component {
         getQuestions((err, questions) => {
             this.props.getQuestion(questions)
           })
-      }
+        // this.state = {
+        //     canGetQuestion: true
+        // }
+        this.canGetQuestion = true
+    }
 
     //   componentDidMount(){
     //       if(!this.props.question){
@@ -21,10 +25,34 @@ class QuestionText extends React.Component {
         
     //   }
 
+    shouldComponentUpdate(prevProps){
+        if(this.props.time === 0){
+            return false
+        } else {
+          return  true
+                
+        }
+    }
+    componentDidUpdate(prevProps){
+        if(prevProps.question){
+            if (prevProps.question.question === this.props.question.question){
+                this.canGetQuestion = true
+            }
+        }
+        
+    }
+
     render () {
-        if(this.props.time === 0) {
-            resetTimer(this.props.room)
-            nextQuestion(this.props.room)
+        const answerButton = document.querySelector('#selected-answer')
+        if(this.props.time === 0 && this.canGetQuestion && !answerButton) {
+            this.canGetQuestion = false
+            console.log('rendertext', this.canGetQuestion)
+            setTimeout(() => {
+                resetTimer(this.props.room)
+                nextQuestion(this.props.room)
+            })
+            
+            
         }
         if(this.props.question){
             // startTimer(this.props.room)

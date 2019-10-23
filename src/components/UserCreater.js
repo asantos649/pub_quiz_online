@@ -21,7 +21,7 @@ class UserCreater extends React.Component {
         })
 
         if( this.props.isCreate){
-            const roomID = this.makeid(6)
+            const roomID = this.makeid(5)
             this.setState ({
                 game: roomID
             })
