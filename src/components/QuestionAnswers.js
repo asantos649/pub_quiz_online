@@ -62,9 +62,12 @@ class QuestionAnswers extends React.Component {
                 button.removeAttribute('id')
                 button.lastElementChild.className = 'hidden-emoji'
               })
-        this.setState({
+        if (this.state.disable){
+            this.setState({
                 disable: false
             })
+        }
+        
     }
 
     clickHandler = (e) => {
