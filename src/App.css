@@ -121,6 +121,7 @@ input {
   border-bottom-style: solid;
   margin-bottom: 3%;
   padding-bottom: 1%;
+  padding-left: 8px;
 }
 
 .question-text {
@@ -280,16 +281,15 @@ a:-webkit-any-link {
 .emoji-button{
   flex-grow: .2;
   font-size: 2rem;
-  padding-top: 1%;
   background-color: #6290C3;
   border-color: #6290C3;
-  padding: 1%;
+  /* padding: 1%; */
+  padding-top: 2%;
   /* border-radius: 1px; */
   /* border-style: none */
 }
 .emoji-button:hover {
   border-radius: 25px;
-  padding: 1%;
 }
 
 #selected-emoji{
@@ -298,7 +298,6 @@ a:-webkit-any-link {
   border-width: 4px;
   border-radius: 25px;
   background-color: #51e5ff;
-  padding: 1%;
 }
 
 button{
@@ -374,9 +373,9 @@ input:focus {
        min-height: 88vh;
        border-radius: 0px;
        height: auto;
-       /* border-bottom: 200px;
+       border-bottom: 18px;
        border-color: #6290C3;
-       border-style: solid; */
+       border-style: solid;
   }
   .new-game-container {
     display: flex;

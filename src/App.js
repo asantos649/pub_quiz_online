@@ -40,7 +40,7 @@ class App extends React.Component {
   render(){
     return (
       <div className="App">
-        <h1 className='title'>UNTITLED TRIVIA GAME</h1>
+        <h1 className='title'>PUB • QUIZ • ONLINE </h1>
         <MainContainer />
       </div>
     );
