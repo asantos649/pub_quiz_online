@@ -5,7 +5,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
-import { submitUser, resetGame  } from './api'
+import { submitUser } from './api'
 import {BrowserRouter} from 'react-router-dom';
 
 
@@ -41,12 +41,12 @@ let defaultState = {
         case 'SCORE':
             return {...state, user: ({...state.user, score: state.user.score + 100})}
         case 'RESET':
-            // resetGame(state.room)
+        
             return {...state, questionIndex: 0, showScore: false, user: ({...state.user, score: 0})}
         case 'CLEAN':
             return defaultState
         case 'JOIN':
-            // create user and then submit user to api
+           
             
             let newId = new Date().valueOf()
             let newUser = {...state.user, name: action.payload.user, id: newId, emoji: action.payload.emoji}
@@ -56,7 +56,7 @@ let defaultState = {
 
         case 'TIMER':
                 return {...state, timer: action.payload.time}
-            // }
+            
             
         default:
             return state

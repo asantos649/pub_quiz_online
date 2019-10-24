@@ -72,7 +72,7 @@ class QuestionAnswers extends React.Component {
         if (!this.state.disable && document.hasFocus()){
            
             e.target.id = 'selected-answer'
-            // resetTimer(this.props.room)
+     
             this.setState({
                 answer: e.target.innerText.slice(3),
                 disable: true
@@ -83,7 +83,7 @@ class QuestionAnswers extends React.Component {
       }
 
 render () {
-    if(this.props.question){
+    if(this.props.question && this.props.question.displayAnswers[0] !== ''){
     return(
         <div className='answer-container'>
         <div className='answer-button-row'>
@@ -97,7 +97,7 @@ render () {
     </div>
     )
     } else {
-        return <div></div>
+        return <h3>Loading...</h3>
       }
 }
 

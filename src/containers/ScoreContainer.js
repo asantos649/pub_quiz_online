@@ -1,11 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import { fetchScore, resetTimer, startGame, connectFirst, subscribeToResetGame, subscribeToExit, leaveRoom, killGame } from '../api';
+import { fetchScore, resetTimer, startGame, subscribeToResetGame, subscribeToExit, leaveRoom, killGame } from '../api';
 import ScoreCard from '../components/ScoreCard'
-import { type } from 'os';
 import { withRouter } from 'react-router'
 
-// import Question from '../components/Question'
 
 class ScoreContainer extends React.Component {
 
@@ -26,7 +24,6 @@ class ScoreContainer extends React.Component {
           
             resetTimer(this.props.room)
             leaveRoom(this.props.room)
-            // this.props.resetState()
             setTimeout( () => {
                 this.props.history.push('/')
                 this.props.resetState()
@@ -35,26 +32,13 @@ class ScoreContainer extends React.Component {
         })
     }
 
-    // makeid(length) {
-    //     var result           = '';
-    //     var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    //     var charactersLength = characters.length;
-    //     for ( var i = 0; i < length; i++ ) {
-    //        result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    //     }
-    //     connectFirst(result.toUpperCase())
-    //     return result.toUpperCase();
-    //  }
-
     playAgainHandler = (e) => {
         e.target.disabled = true
         resetTimer(this.props.room)
-        // const newRoom = this.makeid(7)
         subscribeToResetGame(() => {
             startGame(this.props.room)
             this.props.resetGame()
         }, this.props.room)
-        // startGame(this.props.room)
     }
 
     exitHandler = () => {
@@ -81,7 +65,6 @@ class ScoreContainer extends React.Component {
       return {
         room: state.room
       }
-    
   }
 
   function mdp(dispatch){

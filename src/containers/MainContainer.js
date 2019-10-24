@@ -35,9 +35,6 @@ function MainContainer(props) {
               return props.showScore ? <ScoreContainer /> : <Question />
             }}
           />
-        
-        {/* {props.showScore ? <ScoreContainer /> : <Question />} */}
-        {/* <UserCreater /> */}
         </Switch>
       </div>
     )

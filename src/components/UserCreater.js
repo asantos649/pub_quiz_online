@@ -26,16 +26,7 @@ class UserCreater extends React.Component {
                 game: roomID
             })
         }
-        
-
     }
-
-    // componentWillUpdate(prevProps){
-    //     const roomID = this.makeid(4)
-    //     this.setState ({
-    //         room: roomID
-    //     })
-    // }
 
     changeHandler = (e) => {
         this.setState({
@@ -60,14 +51,8 @@ class UserCreater extends React.Component {
    
     }
 
-    startGameHandler = () => {
-
-       
+    startGameHandler = () => { 
         startGame(this.state.game)
-        //     () => {
-        //     // debugger
-        //     this.props.history.push(`/game/${this.state.game}`)
-        // })
     }
 
     makeid(length) {
@@ -153,9 +138,6 @@ class UserCreater extends React.Component {
       submitHandler: (room, user, emoji) => {
         dispatch(joinGame(room, user, emoji))
         },
-        // startGame: (room) => {
-        //     dispatch(startGame(room))
-        // }
     }
   }
   

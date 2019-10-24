@@ -1,8 +1,6 @@
 import React from 'react';
-import { connect } from 'react-redux'
 import {subscribeToUserList} from '../api'
 import User from "../components/User"
-// import Question from '../components/Question'
 
 class UserListContainer extends React.Component {
 
@@ -22,7 +20,6 @@ class UserListContainer extends React.Component {
  
 
     render() {
-        // debugger
         let usersList = this.state.users.map((user) => <User key={user.id} user={user}/>)
         return (
             <div >

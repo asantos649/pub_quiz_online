@@ -10,15 +10,8 @@ function connectFirst(room) {
 }
 
 function subscribeToTimer(cb, room, time) {
-    // socket.on('timer', time => cb(null, time))
-    
     socket.emit('subscribeToTimer', room, time);
-
 }
-
-// function unsubscribeToTimer(roomVar){
-//     socket.emit('unsubscribeTimer', roomVar)
-// }
 
 function subscribeToShowAnswer(cb) {
     socket.on('showAnswers', cb)
@@ -81,16 +74,11 @@ function fetchScore(roomVar, cb) {
 }
 
 function submitUser(roomVar, user) {
-    
     socket.emit('connectNew', roomVar, user)
 }
 
 function startGame(roomVar, cb) {
-
-    
     socket.emit('startGame', roomVar)
-    // socket.on('firstQuestion', cb)
-    
 }
 
 function firstQuestionHandler(cb) {
@@ -105,16 +93,11 @@ function subscribeToExit(cb) {
     socket.on('exitGame', cb)
 }
 
-// function resetGame(roomVar) {
-//     socket.emit('resetGame', roomVar)
-// }
-
 export { 
      subscribeToShowAnswer,
      subscribeToResetGame,
      subscribeToExit,
      killGame,
-    //  resetGame,
      subscribeToUserList,
      subscribeToTimer,
      nextQuestion,

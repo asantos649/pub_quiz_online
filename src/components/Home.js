@@ -1,9 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
 
-// function joinPrivateHandler(){
-//   this.props.history.push('/')
-// }
+
 
 function Home() {
     return (

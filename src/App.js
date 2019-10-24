@@ -2,21 +2,14 @@ import React from 'react';
 import './App.css';
 import MainContainer from './containers/MainContainer'
 import { connect } from 'react-redux'
-import { leaveRoom, resetTimer, subscribeToTimer } from './api';
-import { changeQuestions, actTimer } from './action'
+import { leaveRoom, resetTimer} from './api';
+import { changeQuestions} from './action'
 import {withRouter} from 'react-router-dom';
 
 
 class App extends React.Component {
 
-  // constructor(props) {
-  //   super(props);
-  //   connectNew(`${props.room}`)
-  //   fetchQuestion(`${props.room}`)
-  //   displayQuestion((err, newQuestion) => {
-  //     props.getQuestion(newQuestion)
-  //   })
-  // }
+
 
   componentDidMount(){
 
@@ -25,7 +18,7 @@ class App extends React.Component {
     
   }
 
-  componentCleanup = () => { // this will hold the cleanup code
+  componentCleanup = () => {
     resetTimer(this.props.room)
     leaveRoom(this.props.room)
     
@@ -56,9 +49,6 @@ function msp(state) {
 
 function mdp(dispatch) {
   return { getQuestion: (newQuestion) => dispatch(changeQuestions(newQuestion)) ,
-    // timerHandler: (time, user) => {
-    //   dispatch(actTimer(time, user)
-    // )}}
   }
   
 }

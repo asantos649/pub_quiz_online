@@ -34,14 +34,4 @@ function newQuestion(index) {
         type: 'NEXT'}
 }
 
-// function startGame(room) {
-//     return {
-//         payload: {
-//             room: room
-//         },
-//         type: 'START'
-//     }
-// }
-
-
 export {changeQuestions, newQuestion, joinGame, actTimer}

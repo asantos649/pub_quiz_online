@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import { getQuestions, startTimer, resetTimer, nextQuestion} from '../api'
+import { getQuestions, resetTimer, nextQuestion} from '../api'
 import { changeQuestions, newQuestion} from '../action'
 import { withRouter } from 'react-router'
 import {cleanString} from '../specialCharacterMap'
@@ -12,18 +12,8 @@ class QuestionText extends React.Component {
         getQuestions((err, questions) => {
             this.props.getQuestion(questions)
           })
-        // this.state = {
-        //     canGetQuestion: true
-        // }
         this.canGetQuestion = true
     }
-
-    //   componentDidMount(){
-    //       if(!this.props.question){
-    //         this.props.history.push('/')
-    //       }
-        
-    //   }
 
     shouldComponentUpdate(prevProps){
         if(this.props.time === 0){
@@ -50,20 +40,16 @@ class QuestionText extends React.Component {
             setTimeout(() => {
                 resetTimer(this.props.room)
                 nextQuestion(this.props.room)
-            })
-            
-            
+            }) 
         }
         if(this.props.question){
-            // startTimer(this.props.room)
-        return(
-            <div className='question-text-box'>
-                <div className='question-category'>{this.props.question.category}</div>
-                <div className='question-text'>{cleanString(this.props.question.question)}</div>
-            </div>
-        )
-        } else {
-            
+            return(
+                <div className='question-text-box'>
+                    <div className='question-category'>{this.props.question.category}</div>
+                    <div className='question-text'>{cleanString(this.props.question.question)}</div>
+                </div>
+            )
+        } else { 
             return <div></div>
         }
     }
